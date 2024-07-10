@@ -1,0 +1,36 @@
+{
+  "name": "image-beautifier",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Used to beautify image share display, add beautiful background, rounded corners, shadows, etc...",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "antd": "^5.19.1",
+    "lucide-react": "^0.407.0",
+    "mobx": "^6.13.0",
+    "mobx-react-lite": "^4.0.7",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react-swc": "^3.5.0",
+    "autoprefixer": "^10.4.19",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react": "^7.34.2",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "eslint-plugin-react-refresh": "^0.4.7",
+    "postcss": "^8.4.39",
+    "tailwindcss": "^3.4.4",
+    "vite": "^5.3.1"
+  },
+  "author": "Chenliwen",
+  "license": "MIT"
+}
