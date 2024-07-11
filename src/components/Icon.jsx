@@ -5,7 +5,10 @@ import {
     Slash,
     MoveDownLeft,
     Pencil,
-    Smile
+    Smile,
+    Undo,
+    Redo,
+    ChevronRight
 } from 'lucide-react';
 
 export default {
@@ -15,5 +18,8 @@ export default {
     Slash,
     MoveDownLeft,
     Pencil,
-    Smile
+    Smile,
+    Undo,
+    Redo,
+    ChevronRight
 };

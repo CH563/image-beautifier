@@ -11,7 +11,7 @@ export default defineConfig({
       '@components': resolve('./src/components'),
       '@assets': resolve('./src/assets'),
       '@style': resolve('./src/style'),
-      '@stores': resolve('./src/stores'),
+      '@stores': resolve('./src/stores/index.js'),
       '@utils': resolve('./src/utils'),
     },
     extensions: [".mjs", ".js", ".ts", ".jsx", ".tsx", ".json"], // 省略扩展名
