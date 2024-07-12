@@ -11,3 +11,14 @@ export const nanoid = customAlphabet(
     '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz',
     7
 );
+
+export const toDownloadFile = (url, name) => {
+    let tmpLink = document.createElement('a');
+    tmpLink.href = url;
+    tmpLink.download = name;
+    tmpLink.style = 'position: absolute; z-index: -111; visibility: none;';
+    document.body.appendChild(tmpLink);
+    tmpLink.click();
+    document.body.removeChild(tmpLink);
+    tmpLink = null;
+};

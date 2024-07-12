@@ -3,10 +3,17 @@ import { Button, ColorPicker, Divider, Tooltip } from 'antd';
 import Icon from '@components/Icon';
 import { WidthDropdown } from '@components/header/WidthDropdown'
 import { useState } from 'react';
+import { toDownloadFile } from '@utils/utils';
+import stores from '@stores';
 
 export default observer(() => {
     const [annotateColor, setAnnotateColor] = useState('#ffffff');
     const [width, setWidth] = useState(1);
+    const exportPng = () => {
+        stores.editor.app.tree.export('png', 0.9).then(result => {
+            toDownloadFile(result.data, 'aa.png')
+        })
+    }
     return (
         <div className='flex items-center justify-center shrink-0 gap-3 bg-white py-2 px-5 border-b border-b-gray-50 shadow-sm relative z-[11]'>
             <div className='flex gap-1 justify-center items-center'>
@@ -15,6 +22,7 @@ export default observer(() => {
                         type='text'
                         shape='circle'
                         icon={<Icon.Undo size={16} />}
+                        onClick={exportPng}
                     ></Button>
                 </Tooltip>
                 <Tooltip placement='bottom' arrow={false} title='Redo'>

@@ -8,7 +8,8 @@ import {
     Smile,
     Undo,
     Redo,
-    ChevronRight
+    ChevronRight,
+    RotateCcw
 } from 'lucide-react';
 
 export default {
@@ -21,5 +22,6 @@ export default {
     Smile,
     Undo,
     Redo,
-    ChevronRight
+    ChevronRight,
+    RotateCcw
 };
