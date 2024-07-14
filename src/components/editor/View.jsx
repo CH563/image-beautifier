@@ -7,6 +7,7 @@ import rotatePng from '@assets/rotate.png';
 import stores from '@stores';
 import FrameBox from './layers/FrameBox';
 import Screenshot from './layers/Screenshot';
+import { ScrollBar } from '@leafer-in/scroll'
 import '@leafer-in/editor';
 import '@leafer-in/view';
 
@@ -39,6 +40,7 @@ export default observer(({target}) => {
                 usePartRender: true,
             },
         });
+        new ScrollBar(app);
 
         stores.editor.setApp(app);
 

@@ -13,6 +13,7 @@
   "dependencies": {
     "@leafer-in/editor": "^1.0.0",
     "@leafer-in/flow": "^1.0.0",
+    "@leafer-in/scroll": "^1.0.0",
     "@leafer-in/view": "^1.0.0",
     "antd": "^5.19.1",
     "clsx": "^2.1.1",

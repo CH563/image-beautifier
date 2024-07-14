@@ -11,6 +11,9 @@ dependencies:
   '@leafer-in/flow':
     specifier: ^1.0.0
     version: 1.0.0
+  '@leafer-in/scroll':
+    specifier: ^1.0.0
+    version: 1.0.0
   '@leafer-in/view':
     specifier: ^1.0.0
     version: 1.0.0
@@ -506,6 +509,14 @@ packages:
     resolution: {integrity: sha512-4YIVcgD34bqhE42rL8POpBaeImEIy4Twz0QC+o4XAEFJJ5hvYw8Lq2uBl9vcPx9eY20vGlOL3SO07BQg3F1fKA==}
     dependencies:
       '@leafer-ui/draw': 1.0.0
+      '@leafer-ui/interface': 1.0.0
+    dev: false
+
+  /@leafer-in/scroll@1.0.0:
+    resolution: {integrity: sha512-q/uPdSyaH6KY4dLbDHa/ElbQIKIOXd8lGTKC2g5JThk2+0E9PNetV2//8ZXBpSamy0n4HwJjXaG5QymVinsiaA==}
+    dependencies:
+      '@leafer-in/interface': 1.0.0
+      '@leafer-ui/core': 1.0.0
       '@leafer-ui/interface': 1.0.0
     dev: false
 

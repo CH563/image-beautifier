@@ -5,31 +5,43 @@ import { Flow } from '@leafer-in/flow';
 import stores from '@stores';
 
 export default observer(({ parent }) => {
-    const [image, flow] = useMemo(() => {
+    const [image, box, flow] = useMemo(() => {
         const image = new Image({
-            width: 600,
-            cornerRadius: [stores.option.round],
-            url: stores.editor.img,
-            shadow: {
-                x: 5,
-                y: 5,
-                blur: 10,
-                color: '#00000015',
-                box: true
-            }
+            width: 640,
+            height: 427,
+            url: stores.editor.img
         });
-        const flow = new Flow({ children: [image], width: stores.option.frameConf.width, height: stores.option.frameConf.height, flowAlign: 'center' });
-        return [image, flow];
+        const box = new Flow({
+            width: 640,
+            height: 427,
+            flowAlign: 'center',
+            overflow: 'hide',
+            children: [image]
+        });
+        const flow = new Flow({ children: [box], width: stores.option.frameConf.width, height: stores.option.frameConf.height, flowAlign: 'center' });
+        return [image, box, flow];
     }, [parent]);
+
     useEffect(() => {
-        image.cornerRadius = [stores.option.round];
+        box.fill = stores.option.paddingBg;
+    }, [stores.option.paddingBg]);
+
+    useEffect(() => {
+        image.width = 640 - stores.option.padding;
+        image.height = 427 - stores.option.padding;
+    }, [stores.option.padding]);
+
+    useEffect(() => {
+        box.cornerRadius = stores.option.round;
+        image.cornerRadius = stores.option.round - 2;
     }, [stores.option.round]);
+
     useEffect(() => {
         const { shadow } = stores.option;
         if (shadow === 1) {
-            image.shadow = null;
+            box.shadow = null;
         } else {
-            image.shadow = {
+            box.shadow = {
                 x: shadow * 2,
                 y: shadow * 2,
                 blur: shadow * 2.5,

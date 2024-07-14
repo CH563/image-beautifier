@@ -9,7 +9,9 @@ import {
     Undo,
     Redo,
     ChevronRight,
-    RotateCcw
+    RotateCcw,
+    ZoomIn,
+    ZoomOut
 } from 'lucide-react';
 
 export default {
@@ -23,5 +25,7 @@ export default {
     Undo,
     Redo,
     ChevronRight,
-    RotateCcw
+    RotateCcw,
+    ZoomIn,
+    ZoomOut
 };
