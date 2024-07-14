@@ -1,6 +1,8 @@
 import { makeAutoObservable } from 'mobx';
+import demoPng from '@assets/demo.png';
 
 class Editor {
+    img = demoPng;
     app = null;
     constructor () {
         makeAutoObservable(this)

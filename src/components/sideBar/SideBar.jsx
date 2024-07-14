@@ -9,6 +9,10 @@ import { cn } from '@utils/utils';
 
 export default observer(() => {
     const [showMore, setShowMore] = useState(false);
+    const onBgChange = (e) => {
+        const key = e.target.value;
+        stores.option.setBackground(key);
+    }
     return (
         <div className="bg-white flex flex-col gap-2 p-4 md:w-[340px] border-l border-l-gray-50 shadow-lg relative z-10">
             <div className="[&_label]:font-semibold [&_label]:text-sm">
@@ -62,16 +66,16 @@ export default observer(() => {
                 </div>
                 <div className="py-3">
                     <Radio.Group
-                        onChange={(e) => stores.option.setBackground(e.target.value)} value={stores.option.background}
+                        onChange={onBgChange} value={stores.option.background}
                         rootClassName="grid grid-cols-7 [&_span]:ps-0"
                     >
                         <Radio className="[&_.ant-radio]:hidden [&_span]:p-0 mr-0" value='default_1'>
-                            <div className={cn("w-8 h-8 rounded-full", backgroundConfig.default_1)}></div>
+                            <div className={cn("w-8 h-8 rounded-full", backgroundConfig.default_1.class)}></div>
                         </Radio>
                         {Object.keys(backgroundConfig).map((key, index) => {
                             if (key.includes('default') && key !== 'default_1') return (
                                 <Radio key={key} className="[&_.ant-radio]:hidden [&_span]:p-0 mr-0" value={key}>
-                                    <div className={cn("w-8 h-8 rounded-full", backgroundConfig[key])}></div>
+                                    <div className={cn("w-8 h-8 rounded-full", backgroundConfig[key].class)}></div>
                                 </Radio>
                             )
                         })}

@@ -9,11 +9,13 @@ const childrenInjectProps = (params, children) => {
             );
         });
     } else {
-        return Children.toArray(children).map((element) =>
+        const dom = Children.toArray(children).map((element) =>
             cloneElement(element, { ...params })
         );
+        return dom;
     }
 };
+
 export default ({ width, height, background, parent, children }) => {
     const frame = useMemo(() => {
         const fra = new Frame({
@@ -23,9 +25,13 @@ export default ({ width, height, background, parent, children }) => {
             fill: background,
         });
         fra.name = 'frame';
-        parent.add(fra);
         return fra;
     }, []);
+
+    useEffect(() => {
+        parent.add(frame);
+    }, [parent]);
+
     useEffect(() => {
         frame.width = width;
         frame.height = height;

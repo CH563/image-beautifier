@@ -1,4 +1,5 @@
 import { makeAutoObservable } from 'mobx';
+import backgroundConfig from '@utils/backgroundConfig';
 
 class Option {
     margin = 30;
@@ -9,6 +10,16 @@ class Option {
     frame = 'none';
     ratio = 4 / 3;
     background = 'default_1';
+    frameConf = {
+        width: 800,
+        height: 600,
+        background: {
+            type: 'linear',
+            from: 'left',
+            to: 'right',
+            stops: ['#6366f1', '#a855f7', '#ec4899']
+        }
+    }
     constructor() {
         makeAutoObservable(this);
     }
@@ -38,6 +49,7 @@ class Option {
 
     setBackground(value) {
         this.background = value;
+        this.frameConf.background = backgroundConfig[value].fill;
     }
 }
 
