@@ -1,5 +1,5 @@
 import { Children, cloneElement, useEffect, useMemo } from 'react';
-import { Frame } from 'leafer-ui';
+import { Frame, PointerEvent } from 'leafer-ui';
 
 const childrenInjectProps = (params, children) => {
     if (children instanceof Array) {
@@ -16,21 +16,18 @@ const childrenInjectProps = (params, children) => {
     }
 };
 
-export default ({ width, height, background, parent, children }) => {
+export default ({ width, height, background, parent, children, cursor }) => {
     const frame = useMemo(() => {
         const fra = new Frame({
             width,
             height,
             overflow: 'hide',
             fill: background,
+            cursor: 'auto'
         });
         fra.name = 'frame';
         return fra;
     }, []);
-
-    useEffect(() => {
-        parent.add(frame);
-    }, [parent]);
 
     useEffect(() => {
         frame.width = width;
@@ -39,10 +36,16 @@ export default ({ width, height, background, parent, children }) => {
     }, [width, height, background]);
 
     useEffect(() => {
+        frame.cursor = cursor || 'auto';
+    }, [cursor]);
+
+    useEffect(() => {
+        parent.add(frame);
         return () => {
-            frame.removeAll(true);
+            frame.off(PointerEvent.DOWN);
+            parent.remove(frame);
         };
-    }, []);
+    }, [parent]);
 
     return <>{childrenInjectProps({ parent: frame }, children)}</>;
 };

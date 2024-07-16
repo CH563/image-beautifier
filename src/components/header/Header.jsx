@@ -1,18 +1,22 @@
 import { observer } from 'mobx-react-lite';
 import { Button, ColorPicker, Divider, Tooltip } from 'antd';
+import { icons } from 'lucide-react';
 import Icon from '@components/Icon';
 import { WidthDropdown } from '@components/header/WidthDropdown'
-import { useState } from 'react';
 import { toDownloadFile } from '@utils/utils';
 import stores from '@stores';
 
+const toolList = ['Square', 'SquareFill', 'Circle', 'Slash', 'MoveDownLeft', 'Pencil', 'Smile'];
+
 export default observer(() => {
-    const [annotateColor, setAnnotateColor] = useState('#ffffff');
-    const [width, setWidth] = useState(1);
     const exportPng = () => {
         stores.editor.app.tree.export('png', 0.9).then(result => {
             toDownloadFile(result.data, 'aa.png')
         })
+    };
+    const selectTool = (type) => {
+        const { useTool } = stores.editor;
+        stores.editor.setUseTool(useTool === type ? null : type);
     }
     return (
         <div className='flex items-center justify-center shrink-0 gap-3 bg-white py-2 px-5 border-b border-b-gray-50 shadow-sm relative z-[11]'>
@@ -35,41 +39,27 @@ export default observer(() => {
             </div>
             <Divider type='vertical' />
             <div className='flex gap-1 justify-center items-center'>
-                <Button
-                    type='text'
-                    shape='circle'
-                    icon={<Icon.Square size={16} />}
-                ></Button>
-                <Button
-                    type='text'
-                    shape='circle'
-                    icon={<Icon.Square size={16} fill='currentColor' />}
-                ></Button>
-                <Button
-                    type='text'
-                    shape='circle'
-                    icon={<Icon.Circle size={16} />}
-                ></Button>
-                <Button
-                    type='text'
-                    shape='circle'
-                    icon={<Icon.Slash size={16} />}
-                ></Button>
-                <Button
-                    type='text'
-                    shape='circle'
-                    icon={<Icon.MoveDownLeft size={16} />}
-                ></Button>
-                <Button
-                    type='text'
-                    shape='circle'
-                    icon={<Icon.Pencil size={16} />}
-                ></Button>
-                <Button
-                    type='text'
-                    shape='circle'
-                    icon={<Icon.Smile size={16} />}
-                ></Button>
+                {toolList.map(item => {
+                    let icon;
+                    if (item.includes('Fill')) {
+                        const type = item.replace('Fill', '');
+                        const Icons = icons[type];
+                        icon = <Icons size={16} fill='currentColor' />;
+                    } else {
+                        const Icons = icons[item];
+                        icon = <Icons name={item} size={16} />;
+                    }
+                    return (
+                        <Button
+                            key={item}
+                            type='text'
+                            shape='circle'
+                            icon={icon}
+                            className={stores.editor.useTool === item && 'text-[#1677ff] bg-sky-100/50 hover:bg-sky-100 hover:text-[#1677ff]'}
+                            onClick={() => selectTool(item)}
+                        ></Button>
+                    )
+                })}
             </div>
             <Divider type='vertical' />
             <div className='flex gap-1 justify-center items-center'>
@@ -91,10 +81,10 @@ export default observer(() => {
                             ],
                         },
                     ]}
-                    value={annotateColor}
-                    onChange={(e) => setAnnotateColor(e.toHexString())}
+                    value={stores.editor.annotateColor}
+                    onChange={(e) => stores.editor.setAnnotateColor(e.toHexString())}
                 />
-                <WidthDropdown defaultValue={width} onChange={setWidth} />
+                <WidthDropdown defaultValue={stores.editor.strokeWidth} onChange={(e) => stores.editor.setStrokeWidth(e)} />
             </div>
         </div>
     );

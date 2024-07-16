@@ -18,7 +18,7 @@ export default observer(({ parent }) => {
             overflow: 'hide',
             children: [image]
         });
-        const flow = new Flow({ children: [box], width: stores.option.frameConf.width, height: stores.option.frameConf.height, flowAlign: 'center' });
+        const flow = new Flow({ children: [box], width: stores.option.frameConf.width, height: stores.option.frameConf.height, flowAlign: 'center', zIndex: 0 });
         return [image, box, flow];
     }, [parent]);
 

@@ -1,13 +1,15 @@
 import { useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
-import { App, Rect, Frame, Image } from 'leafer-ui';
+import { App, ResizeEvent, ZoomEvent, DragEvent } from 'leafer-ui';
 import debounce from 'lodash/debounce';
 import { addListener, removeListener } from 'resize-detector';
 import rotatePng from '@assets/rotate.png';
 import stores from '@stores';
 import FrameBox from './layers/FrameBox';
 import Screenshot from './layers/Screenshot';
+import ShapeLine from './layers/ShapeLine';
 import { ScrollBar } from '@leafer-in/scroll'
+import { nanoid } from '@utils/utils';
 import '@leafer-in/editor';
 import '@leafer-in/view';
 
@@ -44,43 +46,75 @@ export default observer(({target}) => {
 
         stores.editor.setApp(app);
 
-        // const frame = new Frame({
-        //     width: 800,
-        //     height: 600,
-        //     overflow: 'hide',
-        //     fill: {
-        //         type: 'linear',
-        //         from: 'left',
-        //         stops: ['#6366f1', '#a855f7', '#ec4899']
-        //     }
-        // });
-        // frame.name = 'frame';
-        // app.tree.add(frame);
-        // const image = new Image({
-        //     width: 600,
-        //     cornerRadius: [8, 8, 8, 8],
-        //     url: demoPng,
-        //     shadow: {
-        //         x: 5,
-        //         y: 5,
-        //         blur: 10,
-        //         color: '#00000015',
-        //         box: true
-        //     }
-        // });
-        // const flow = new Flow({ children: [image], width: 800, height: 600, flowAlign: 'center' });
-        // frame.add(flow);
-        // frame.add(Rect.one({ editable: true, fill: '#FEB027', cornerRadius: [20, 0, 0, 20] }, 100, 100));
-        // frame.add(Rect.one({ editable: true, fill: '#FFE04B', cornerRadius: [0, 20, 20, 0] }, 300, 100));
+        app.tree.on(ZoomEvent.ZOOM, () => {
+            stores.editor.setScale(app.tree.scale);
+        });
+        app.tree.on(ResizeEvent.RESIZE, () => {
+            stores.editor.setScale(app.tree.scale);
+        });
+
+        let shapeId = null;
+        app.tree.on(DragEvent.START, (arg) => {
+            if (!stores.editor.useTool) return;
+            const { target } = arg;
+            const shape = stores.editor.getShape(target.id);
+            if (shape) return;
+            shapeId = nanoid();
+            const size = arg.getPageBounds();
+            const type = stores.editor.useTool;
+            const newShape = {
+                id: shapeId,
+                type,
+                fill: stores.editor.annotateColor,
+                strokeWidth: stores.editor.strokeWidth,
+                zIndex: stores.editor.shapes.size + 1,
+                ...size
+            };
+            if (['Slash', 'MoveDownLeft', 'Pencil'].includes(type)) {
+                newShape.points = [size.x, size.y];
+            }
+            stores.editor.addShape(newShape);
+        });
+        app.tree.on(DragEvent.DRAG, (arg) => {
+            if (!stores.editor.useTool) return;
+            if (!shapeId) return;
+            const shape = stores.editor.getShape(shapeId);
+            if (!shape) return;
+            const size = arg.getPageBounds();
+            const newShape = Object.assign({}, shape, size);
+            const { points, type } = newShape;
+            if (points && points.length) {
+                const { x, y } = arg.getInnerTotal();
+                const newX = x > 0 ? size.x + x : size.x;
+                const newY = y > 0 ? size.y + y : size.y;
+                newShape.points = [points[0], points[1], newX, newY];
+            }
+            stores.editor.addShape(newShape);
+        });
+        app.tree.on(DragEvent.END, () => {
+            if (!shapeId) return;
+            const shape = stores.editor.getShape(shapeId);
+            if (shape) {
+                if ((shape.width === 0 || shape.height === 0) && !['Slash', 'MoveDownLeft', 'Pencil'].includes(shape.type)) {
+                    stores.editor.removeShape(shape);
+                } else {
+                    stores.editor.addShape(Object.assign({}, shape, {editable: true}));
+                }
+            }
+            shapeId = null;
+            stores.editor.setUseTool(null);
+        });
 
         // 监听容器变化
         const onResize = debounce(() => {
             app.tree.zoom('fit', 100);
         }, 10);
+
         addListener(target, onResize);
     
         setTimeout(() => {
             app.tree.zoom('fit', 100);
+            stores.editor.setScale(app.tree.scale);
         }, 10);
 
         return (() => {
@@ -92,8 +126,11 @@ export default observer(({target}) => {
     return (<>
         {
             stores.editor.app?.tree &&
-            <FrameBox parent={stores.editor.app.tree} {...stores.option.frameConf}>
-                <Screenshot />
+            <FrameBox parent={stores.editor.app.tree} cursor={stores.editor.useTool ? 'crosshair' : 'auto'} {...stores.option.frameConf}>
+                    {stores.editor.shapesList.map((item) => (
+                        <ShapeLine key={item.id} {...item} />
+                    ))}
+                    <Screenshot />
             </FrameBox>
         }
     </>);
