@@ -52,6 +52,7 @@ class Editor {
 
     setSelect(value) {
         if (!this.app) return;
+        this.app.editor.app.config.move.drag = false;
         this.app.editor.hittable = value;
     }
     

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Button, ColorPicker, Divider, Tooltip } from 'antd';
 import { icons } from 'lucide-react';
@@ -10,6 +11,7 @@ import EmojiSelect from './EmojiSelect';
 const toolList = ['Square', 'SquareFill', 'Circle', 'Slash', 'MoveDownLeft', 'Pencil', 'Smile'];
 
 export default observer(() => {
+    const [isMove, setIsMove] = useState(false);
     const exportPng = () => {
         stores.editor.app.tree.export('png', 0.9).then(result => {
             toDownloadFile(result.data, 'aa.png')
@@ -32,6 +34,11 @@ export default observer(() => {
             editable: true
         });
     }
+    const toggleMove = () => {
+        const is = !isMove;
+        setIsMove(is);
+        stores.editor.app.config.move.drag = is;
+    }
     return (
         <div className='flex items-center justify-center shrink-0 gap-3 bg-white py-2 px-5 border-b border-b-gray-50 shadow-sm relative z-[11]'>
             <div className='flex gap-1 justify-center items-center'>
@@ -48,6 +55,7 @@ export default observer(() => {
                         type='text'
                         shape='circle'
                         icon={<Icon.Redo size={16} />}
+                        onClick={() => stores.editor.app.config.move.drag = true}
                     ></Button>
                 </Tooltip>
             </div>
@@ -72,7 +80,7 @@ export default observer(() => {
                             icon={icon}
                             className={stores.editor.useTool === item && 'text-[#1677ff] bg-sky-100/50 hover:bg-sky-100 hover:text-[#1677ff]'}
                             onClick={() => selectTool(item)}
-                        ></Button>
+                        />
                     )
                 })}
             </div>
@@ -100,6 +108,13 @@ export default observer(() => {
                     onChange={(e) => stores.editor.setAnnotateColor(e.toHexString())}
                 />
                 <WidthDropdown defaultValue={stores.editor.strokeWidth} onChange={(e) => stores.editor.setStrokeWidth(e)} />
+                <Button
+                    type="text"
+                    shape='circle'
+                    className={isMove && 'text-[#1677ff] bg-sky-100/50 hover:bg-sky-100 hover:text-[#1677ff]'}
+                    icon={<Icon.Hand size={16} />}
+                    onClick={toggleMove}
+                />
             </div>
         </div>
     );

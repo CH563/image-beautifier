@@ -16,6 +16,7 @@ export default observer(({ parent }) => {
             height: 427,
             flowAlign: 'center',
             overflow: 'hide',
+            scale: 1,
             children: [image]
         });
         const flow = new Flow({ children: [box], width: stores.option.frameConf.width, height: stores.option.frameConf.height, flowAlign: 'center', zIndex: 0 });
@@ -50,6 +51,11 @@ export default observer(({ parent }) => {
             };
         }
     }, [stores.option.shadow]);
+
+    useEffect(() => {
+        box.scale = stores.option.scale;
+    }, [stores.option.scale])
+
     useEffect(() => {
         flow.width = stores.option.frameConf.width;
         flow.height = stores.option.frameConf.height;

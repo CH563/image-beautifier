@@ -16,12 +16,13 @@ export default observer(() => {
     return (
         <div className="bg-white flex flex-col gap-2 p-4 md:w-[340px] border-l border-l-gray-50 shadow-lg relative z-10">
             <div className="[&_label]:font-semibold [&_label]:text-sm">
-                <label>Margin</label>
+                <label>Scale</label>
                 <Slider
-                    min={0}
-                    max={300}
-                    onChange={(e) => stores.option.setMargin(e)}
-                    value={typeof stores.option.margin === 'number' ? stores.option.margin : 0}
+                    min={0.1}
+                    max={2}
+                    step={0.1}
+                    onChange={(e) => stores.option.setScale(e)}
+                    value={typeof stores.option.scale === 'number' ? stores.option.scale : 1}
                 />
             </div>
             <div className="[&_label]:font-semibold [&_label]:text-sm">

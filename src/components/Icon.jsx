@@ -11,7 +11,8 @@ import {
     ChevronRight,
     RotateCcw,
     ZoomIn,
-    ZoomOut
+    ZoomOut,
+    Hand
 } from 'lucide-react';
 
 export default {
@@ -27,5 +28,6 @@ export default {
     ChevronRight,
     RotateCcw,
     ZoomIn,
-    ZoomOut
+    ZoomOut,
+    Hand
 };

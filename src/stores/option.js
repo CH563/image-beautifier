@@ -2,7 +2,7 @@ import { makeAutoObservable } from 'mobx';
 import backgroundConfig from '@utils/backgroundConfig';
 
 class Option {
-    margin = 30;
+    scale = 1;
     padding = 0;
     paddingBg = 'rgba(255,255,255,.85)';
     round = 10;
@@ -23,8 +23,8 @@ class Option {
     constructor() {
         makeAutoObservable(this);
     }
-    setMargin(value) {
-        this.margin = value;
+    setScale(value) {
+        this.scale = value;
     }
 
     setPadding(value) {
