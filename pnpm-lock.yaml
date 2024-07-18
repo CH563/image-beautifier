@@ -5,6 +5,15 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@emoji-mart/data':
+    specifier: ^1.2.1
+    version: 1.2.1
+  '@emoji-mart/react':
+    specifier: ^1.1.1
+    version: 1.1.1(emoji-mart@5.6.0)(react@18.3.1)
+  '@leafer-in/arrow':
+    specifier: ^1.0.0
+    version: 1.0.0
   '@leafer-in/editor':
     specifier: ^1.0.0
     version: 1.0.0
@@ -23,6 +32,9 @@ dependencies:
   clsx:
     specifier: ^2.1.1
     version: 2.1.1
+  emoji-mart:
+    specifier: ^5.6.0
+    version: 5.6.0
   leafer-ui:
     specifier: ^1.0.0
     version: 1.0.0
@@ -162,6 +174,20 @@ packages:
   /@ctrl/tinycolor@3.6.1:
     resolution: {integrity: sha512-SITSV6aIXsuVNV3f3O0f2n/cgyEDWoSqtZMYiAmcsYHydcKrOz3gUxB/iXd/Qf08+IZX4KpgNbvUdMBmWz+kcA==}
     engines: {node: '>=10'}
+    dev: false
+
+  /@emoji-mart/data@1.2.1:
+    resolution: {integrity: sha512-no2pQMWiBy6gpBEiqGeU77/bFejDqUTRY7KX+0+iur13op3bqUsXdnwoZs6Xb1zbv0gAj5VvS1PWoUUckSr5Dw==}
+    dev: false
+
+  /@emoji-mart/react@1.1.1(emoji-mart@5.6.0)(react@18.3.1):
+    resolution: {integrity: sha512-NMlFNeWgv1//uPsvLxvGQoIerPuVdXwK/EUek8OOkJ6wVOWPUizRBJU0hDqWZCOROVpfBgCemaC3m6jDOXi03g==}
+    peerDependencies:
+      emoji-mart: ^5.2
+      react: ^16.8 || ^17 || ^18
+    dependencies:
+      emoji-mart: 5.6.0
+      react: 18.3.1
     dev: false
 
   /@emotion/hash@0.8.0:
@@ -479,6 +505,14 @@ packages:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
     dev: true
+
+  /@leafer-in/arrow@1.0.0:
+    resolution: {integrity: sha512-WQEbaT6DPyAVHkZm0druSed/K/xfxJhZrHaPdrjc889m+66oGFdyhEv3ydFIUZucGi9Fzm+1dSCebJ91dhYpXw==}
+    dependencies:
+      '@leafer-in/interface': 1.0.0
+      '@leafer-ui/draw': 1.0.0
+      '@leafer-ui/interface': 1.0.0
+    dev: false
 
   /@leafer-in/editor@1.0.0:
     resolution: {integrity: sha512-U2nuZCm1n7ghuHuYSKsXs7q6b0zJhlrR0NHWWWyTJRvqarBs9gIOjxq7btMuO2rrUPzJrUiIK1Q+AGJee+V24w==}
@@ -1809,6 +1843,10 @@ packages:
   /electron-to-chromium@1.4.823:
     resolution: {integrity: sha512-4h+oPeAiGQOHFyUJOqpoEcPj/xxlicxBzOErVeYVMMmAiXUXsGpsFd0QXBMaUUbnD8hhSfLf9uw+MlsoIA7j5w==}
     dev: true
+
+  /emoji-mart@5.6.0:
+    resolution: {integrity: sha512-eJp3QRe79pjwa+duv+n7+5YsNhRcMl812EcFVwrnRvYKoNPoQb5qxU8DG6Bgwji0akHdp6D4Ln6tYLG58MFSow==}
+    dev: false
 
   /emoji-regex@8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}

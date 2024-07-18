@@ -11,12 +11,16 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emoji-mart/data": "^1.2.1",
+    "@emoji-mart/react": "^1.1.1",
+    "@leafer-in/arrow": "^1.0.0",
     "@leafer-in/editor": "^1.0.0",
     "@leafer-in/flow": "^1.0.0",
     "@leafer-in/scroll": "^1.0.0",
     "@leafer-in/view": "^1.0.0",
     "antd": "^5.19.1",
     "clsx": "^2.1.1",
+    "emoji-mart": "^5.6.0",
     "leafer-ui": "^1.0.0",
     "lodash": "^4.17.21",
     "lucide-react": "^0.407.0",

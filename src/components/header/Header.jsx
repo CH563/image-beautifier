@@ -3,8 +3,9 @@ import { Button, ColorPicker, Divider, Tooltip } from 'antd';
 import { icons } from 'lucide-react';
 import Icon from '@components/Icon';
 import { WidthDropdown } from '@components/header/WidthDropdown'
-import { toDownloadFile } from '@utils/utils';
+import { toDownloadFile, nanoid } from '@utils/utils';
 import stores from '@stores';
+import EmojiSelect from './EmojiSelect';
 
 const toolList = ['Square', 'SquareFill', 'Circle', 'Slash', 'MoveDownLeft', 'Pencil', 'Smile'];
 
@@ -17,6 +18,19 @@ export default observer(() => {
     const selectTool = (type) => {
         const { useTool } = stores.editor;
         stores.editor.setUseTool(useTool === type ? null : type);
+    }
+    const handleSelectEmoji = (emoji) => {
+        const x = stores.option.frameConf.width / 2 - 24;
+        const y = stores.option.frameConf.height / 2 - 24;
+        stores.editor.addShape({
+            id: nanoid(),
+            type: 'emoji',
+            text: emoji,
+            zIndex: stores.editor.shapes.size + 1,
+            x,
+            y,
+            editable: true
+        });
     }
     return (
         <div className='flex items-center justify-center shrink-0 gap-3 bg-white py-2 px-5 border-b border-b-gray-50 shadow-sm relative z-[11]'>
@@ -40,6 +54,7 @@ export default observer(() => {
             <Divider type='vertical' />
             <div className='flex gap-1 justify-center items-center'>
                 {toolList.map(item => {
+                    if (item === 'Smile') return (<EmojiSelect key={item} disabled={false} toSelect={handleSelectEmoji} />)
                     let icon;
                     if (item.includes('Fill')) {
                         const type = item.replace('Fill', '');

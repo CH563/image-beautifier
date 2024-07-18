@@ -1,9 +1,10 @@
 import { useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
-import { App, ResizeEvent, ZoomEvent, DragEvent } from 'leafer-ui';
+import { App, ResizeEvent, ZoomEvent, DragEvent, Cursor } from 'leafer-ui';
 import debounce from 'lodash/debounce';
 import { addListener, removeListener } from 'resize-detector';
 import rotatePng from '@assets/rotate.png';
+import pencilPng from '@assets/pencil.png';
 import stores from '@stores';
 import FrameBox from './layers/FrameBox';
 import Screenshot from './layers/Screenshot';
@@ -13,7 +14,7 @@ import { nanoid } from '@utils/utils';
 import '@leafer-in/editor';
 import '@leafer-in/view';
 
-
+Cursor.set('pencil', { url: pencilPng });
 
 export default observer(({target}) => {
     useEffect(() => {
@@ -87,11 +88,16 @@ export default observer(({target}) => {
                 const { x, y } = arg.getInnerTotal();
                 const newX = x > 0 ? size.x + x : size.x;
                 const newY = y > 0 ? size.y + y : size.y;
-                newShape.points = [points[0], points[1], newX, newY];
+                if (type === 'Pencil') {
+                    newShape.points = [...points, newX, newY];
+                } else {
+                    newShape.points = [points[0], points[1], newX, newY];
+                }
             }
             stores.editor.addShape(newShape);
         });
         app.tree.on(DragEvent.END, () => {
+            if (!stores.editor.useTool) return;
             if (!shapeId) return;
             const shape = stores.editor.getShape(shapeId);
             if (shape) {
@@ -102,7 +108,7 @@ export default observer(({target}) => {
                 }
             }
             shapeId = null;
-            stores.editor.setUseTool(null);
+            if (stores.editor.useTool !== 'Pencil') stores.editor.setUseTool(null);
         });
 
         // 监听容器变化
@@ -126,7 +132,7 @@ export default observer(({target}) => {
     return (<>
         {
             stores.editor.app?.tree &&
-            <FrameBox parent={stores.editor.app.tree} cursor={stores.editor.useTool ? 'crosshair' : 'auto'} {...stores.option.frameConf}>
+            <FrameBox parent={stores.editor.app.tree} cursor={stores.editor.cursor} {...stores.option.frameConf}>
                     {stores.editor.shapesList.map((item) => (
                         <ShapeLine key={item.id} {...item} />
                     ))}

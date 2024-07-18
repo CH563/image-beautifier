@@ -1,7 +1,8 @@
 import { useEffect, useMemo } from 'react';
-import { Rect, Ellipse, Line } from 'leafer-ui';
+import { Rect, Ellipse, Line, Text } from 'leafer-ui';
+import { Arrow } from '@leafer-in/arrow';
 
-export default ({ parent, type, id, width, height, x, y, fill, strokeWidth, zIndex, points, editable }) => {
+export default ({ parent, type, id, width, height, x, y, fill, strokeWidth, zIndex, points, editable, text }) => {
     const shape = useMemo(() => {
         const defaultOption = { id, x, y, zIndex }
         if (type === 'SquareFill') {
@@ -29,6 +30,36 @@ export default ({ parent, type, id, width, height, x, y, fill, strokeWidth, zInd
                 zIndex,
                 stroke: fill,
                 strokeWidth
+            });
+        }
+        if (type === 'MoveDownLeft') {
+            return new Arrow({
+                id,
+                points,
+                zIndex,
+                strokeCap: 'round',
+                strokeJoin: 'round',
+                stroke: fill,
+                strokeWidth
+            });
+        }
+        if (type === 'Pencil') {
+            return new Line({
+                id,
+                points,
+                zIndex,
+                curve: true,
+                stroke: fill,
+                strokeWidth
+            });
+        }
+        if (type === 'emoji') {
+            return new Text({
+                id,
+                zIndex,
+                text,
+                resizeFontSize: true,
+                fontSize: 48
             });
         }
         return new Rect({

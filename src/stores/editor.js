@@ -17,6 +17,10 @@ class Editor {
         return Array.from(toJS(this.shapes).values());
     }
 
+    get cursor() {
+        return this.useTool === 'Pencil' ? 'pencil' : this.useTool ? 'crosshair' : 'auto'
+    }
+
     getShape(id) {
         return this.shapes.get(id);
     }
@@ -39,7 +43,18 @@ class Editor {
 
     setUseTool(value) {
         this.useTool = value;
+        if (value) {
+            this.setSelect(false);
+        } else {
+            this.setSelect(true);
+        }
     }
+
+    setSelect(value) {
+        if (!this.app) return;
+        this.app.editor.hittable = value;
+    }
+    
 
     setAnnotateColor(color) {
         this.annotateColor = color;
