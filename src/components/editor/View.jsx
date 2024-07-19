@@ -136,7 +136,7 @@ export default observer(({target}) => {
                     {stores.editor.shapesList.map((item) => (
                         <ShapeLine key={item.id} {...item} />
                     ))}
-                    <Screenshot />
+                    {stores.editor.img?.src && <Screenshot />}
             </FrameBox>
         }
     </>);

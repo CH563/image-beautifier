@@ -2,7 +2,7 @@ import { makeAutoObservable, toJS } from 'mobx';
 import demoPng from '@assets/demo.png';
 
 class Editor {
-    img = demoPng;
+    img = {};
     app = null;
     scale = 100;
     useTool = null;
@@ -19,6 +19,10 @@ class Editor {
 
     get cursor() {
         return this.useTool === 'Pencil' ? 'pencil' : this.useTool ? 'crosshair' : 'auto'
+    }
+
+    setImg(value) {
+        this.img = value;
     }
 
     getShape(id) {

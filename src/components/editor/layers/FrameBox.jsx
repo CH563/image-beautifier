@@ -1,5 +1,5 @@
 import { Children, cloneElement, useEffect, useMemo } from 'react';
-import { Frame, PointerEvent } from 'leafer-ui';
+import { Frame } from 'leafer-ui';
 
 const childrenInjectProps = (params, children) => {
     if (children instanceof Array) {
@@ -42,8 +42,7 @@ export default ({ width, height, background, parent, children, cursor }) => {
     useEffect(() => {
         parent.add(frame);
         return () => {
-            frame.off(PointerEvent.DOWN);
-            parent.remove(frame);
+            frame.remove();
         };
     }, [parent]);
 

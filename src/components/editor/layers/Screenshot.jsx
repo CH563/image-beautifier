@@ -9,7 +9,7 @@ export default observer(({ parent }) => {
         const image = new Image({
             width: 640,
             height: 427,
-            url: stores.editor.img
+            url: stores.editor.img.src
         });
         const box = new Flow({
             width: 640,

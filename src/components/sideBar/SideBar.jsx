@@ -14,7 +14,32 @@ export default observer(() => {
         stores.option.setBackground(key);
     }
     return (
-        <div className="bg-white flex flex-col gap-2 p-4 md:w-[340px] border-l border-l-gray-50 shadow-lg relative z-10">
+        <div className="bg-white flex flex-col gap-2 p-4 md:w-[340px] border-l border-l-gray-50 shadow-lg relative z-10 select-none">
+            <div className="[&_label]:font-semibold [&_label]:text-sm">
+                <label>Quick</label>
+                <div className="flex gap-4 items-center py-2">
+                    <Button
+                        type='text'
+                        shape='circle'
+                        icon={<Icon.Crop size={18} />}
+                    ></Button>
+                    <Button
+                        type='text'
+                        shape='circle'
+                        icon={<Icon.FlipHorizontal2 size={18} />}
+                    ></Button>
+                    <Button
+                        type='text'
+                        shape='circle'
+                        icon={<Icon.FlipVertical2 size={18} />}
+                    ></Button>
+                    <Button
+                        type='text'
+                        shape='circle'
+                        icon={<Icon.Sunset size={18} />}
+                    ></Button>
+                </div>
+            </div>
             <div className="[&_label]:font-semibold [&_label]:text-sm">
                 <label>Scale</label>
                 <Slider

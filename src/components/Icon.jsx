@@ -12,7 +12,15 @@ import {
     RotateCcw,
     ZoomIn,
     ZoomOut,
-    Hand
+    Hand,
+    Crop,
+    FlipHorizontal2,
+    FlipVertical2,
+    Sunset,
+    ImagePlus,
+    Type,
+    CodeXml,
+    ClipboardPaste
 } from 'lucide-react';
 
 export default {
@@ -29,5 +37,13 @@ export default {
     RotateCcw,
     ZoomIn,
     ZoomOut,
-    Hand
+    Hand,
+    Crop,
+    FlipHorizontal2,
+    FlipVertical2,
+    Sunset,
+    ImagePlus,
+    Type,
+    CodeXml,
+    ClipboardPaste
 };

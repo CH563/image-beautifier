@@ -116,6 +116,10 @@ export default observer(() => {
                     onClick={toggleMove}
                 />
             </div>
+            <Divider type='vertical' />
+            <div className="flex gap-1 justify-center items-center text-xs text-slate-500">
+                {stores.option.frameConf.width} x {stores.option.frameConf.height} px
+            </div>
         </div>
     );
 });
