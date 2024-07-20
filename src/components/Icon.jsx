@@ -20,7 +20,10 @@ import {
     ImagePlus,
     Type,
     CodeXml,
-    ClipboardPaste
+    ClipboardPaste,
+    ImagePlay,
+    Maximize,
+    ListCollapse
 } from 'lucide-react';
 
 export default {
@@ -45,5 +48,8 @@ export default {
     ImagePlus,
     Type,
     CodeXml,
-    ClipboardPaste
+    ClipboardPaste,
+    ImagePlay,
+    Maximize,
+    ListCollapse
 };

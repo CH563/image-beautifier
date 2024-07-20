@@ -5,7 +5,8 @@
             "@components/*": ["./components/*"],
             "@assets/*": ["./assets/*"],
             "@stores": ["./stores/index.js"],
-            "@utils/*": ["./utils/*"]
+            "@utils/*": ["./utils/*"],
+            "@hooks/*": ["./hooks/*"]
         }
     }
 }

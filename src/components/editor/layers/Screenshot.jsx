@@ -3,6 +3,7 @@ import { observer } from 'mobx-react-lite';
 import { Image } from 'leafer-ui';
 import { Flow } from '@leafer-in/flow';
 import stores from '@stores';
+import { computedSize } from '@utils/utils';
 
 export default observer(({ parent }) => {
     const [image, box, flow] = useMemo(() => {
@@ -24,13 +25,12 @@ export default observer(({ parent }) => {
     }, [parent]);
 
     useEffect(() => {
-        box.fill = stores.option.paddingBg;
-    }, [stores.option.paddingBg]);
-
-    useEffect(() => {
-        image.width = 640 - stores.option.padding;
-        image.height = 427 - stores.option.padding;
-    }, [stores.option.padding]);
+        if (stores.option.padding === 0) {
+            box.fill = '#ffffff00'
+        } else {
+            box.fill = stores.option.paddingBg;
+        }
+    }, [stores.option.paddingBg, stores.option.padding]);
 
     useEffect(() => {
         box.cornerRadius = stores.option.round;
@@ -39,14 +39,14 @@ export default observer(({ parent }) => {
 
     useEffect(() => {
         const { shadow } = stores.option;
-        if (shadow === 1) {
+        if (shadow === 0) {
             box.shadow = null;
         } else {
             box.shadow = {
-                x: shadow * 2,
-                y: shadow * 2,
-                blur: shadow * 2.5,
-                color: '#00000035',
+                x: shadow * 4,
+                y: shadow * 4,
+                blur: shadow * 3,
+                color: '#00000045',
                 box: true
             };
         }
@@ -59,7 +59,12 @@ export default observer(({ parent }) => {
     useEffect(() => {
         flow.width = stores.option.frameConf.width;
         flow.height = stores.option.frameConf.height;
-    }, [stores.option.frameConf.width, stores.option.frameConf.height]);
+        const { width, height } = computedSize(stores.editor.img.width, stores.editor.img.height, stores.option.frameConf.width - 40, stores.option.frameConf.height - 40);
+        image.width = width - stores.option.padding;
+        image.height = height - stores.option.padding;
+        box.width = width;
+        box.height = height;
+    }, [stores.option.frameConf.width, stores.option.frameConf.height, stores.option.padding]);
 
     useEffect(() => {
         parent.add(flow);

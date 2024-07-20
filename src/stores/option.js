@@ -4,7 +4,7 @@ import backgroundConfig from '@utils/backgroundConfig';
 class Option {
     scale = 1;
     padding = 0;
-    paddingBg = 'rgba(255,255,255,0)';
+    paddingBg = 'rgba(255,255,255, 100)';
     round = 10;
     shadow = 3;
     frame = 'none';

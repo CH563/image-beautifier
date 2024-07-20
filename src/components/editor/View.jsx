@@ -113,13 +113,21 @@ export default observer(({target}) => {
 
         // 监听容器变化
         const onResize = debounce(() => {
+            const { width, height } = target.getBoundingClientRect();
             app.tree.zoom('fit', 100);
+            if (stores.option.frameConf.width < width && stores.option.frameConf.height < height) {
+                app.tree.zoom(1);
+            }
         }, 10);
 
         addListener(target, onResize);
     
         setTimeout(() => {
+            const { width, height } = target.getBoundingClientRect();
             app.tree.zoom('fit', 100);
+            if (stores.option.frameConf.width < width && stores.option.frameConf.height < height) {
+                app.tree.zoom(1);
+            }
             stores.editor.setScale(app.tree.scale);
         }, 10);
 

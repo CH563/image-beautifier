@@ -14,12 +14,12 @@ const items = [
         label: '100%'
     },
     {
-        key: 2,
-        label: '200%'
+        key: 1.5,
+        label: '150%'
     },
     {
-        key: 4,
-        label: 'Fit'
+        key: 2,
+        label: '200%'
     }
 ];
 
@@ -38,12 +38,17 @@ export default observer(() => {
         stores.editor.setScale(stores.editor.app.tree.scale);
     }
     return (
-        <div className="absolute z-10 bottom-4 right-4 flex items-center bg-white overflow-hidden rounded-full shadow-md">
-            <Button type="text" icon={<Icon.ZoomIn size={16} />} onClick={() => handleZoom('in')} />
-            <Dropdown menu={{ items, onClick: handleMenuClick }} placement="top">
-                <Button type="text">{stores.editor.scale}%</Button>
-            </Dropdown>
-            <Button type="text" icon={<Icon.ZoomOut size={16} />} onClick={() => handleZoom('out')} />
+        <div className="absolute z-10 bottom-4 gap-2 right-4 flex items-center ">
+            <div className="flex bg-white overflow-hidden rounded-full shadow-md">
+                <Button type="text" icon={<Icon.ZoomIn size={16} />} onClick={() => handleZoom('in')} />
+                <Dropdown menu={{ items, onClick: handleMenuClick }} placement="top">
+                    <Button type="text">{stores.editor.scale}%</Button>
+                </Dropdown>
+                <Button type="text" icon={<Icon.ZoomOut size={16} />} onClick={() => handleZoom('out')} />
+            </div>
+            <div className="rounded-full bg-white shadow-md overflow-hidden">
+                <Button type="text" icon={<Icon.Maximize size={16} />} onClick={() => handleMenuClick({key: 4})} />
+            </div>
         </div>
     )
 });

@@ -3,11 +3,12 @@ import Icon from '@components/Icon';
 import { Upload, Button, Tooltip } from 'antd';
 import { supportImg, getImage } from '@utils/utils';
 import stores from '@stores';
+import usePaste from '@hooks/usePaste';
 
 const { Dragger } = Upload;
 
 export default observer(() => {
-    const beforeUpload = async (file) => {
+    const getFile = async (file) => {
         const imgUrl = window.URL.createObjectURL(file);
         const image = await getImage(imgUrl)
         stores.editor.setImg({
@@ -17,8 +18,14 @@ export default observer(() => {
             type: file.type,
             name: file.name
         });
+    }
+    const beforeUpload = async (file) => {
+        await getFile(file);
         return Promise.reject();
     }
+    usePaste((file) => {
+        getFile(file);
+    });
     return (
         <div className='md:w-0 md:flex-1 flex flex-col justify-center items-center overflow-hidden select-none relative'>
             <div className="max-w-[600px]">
@@ -44,8 +51,8 @@ export default observer(() => {
                     <Tooltip placement='top' arrow={false} title='Beautify Code'>
                         <Button shape="round" type="default" size="large" icon={<Icon.CodeXml size={20} />} />
                     </Tooltip>
-                    <Tooltip placement='top' arrow={false} title='Paste the image'>
-                        <Button shape="round" type="default" size="large" icon={<Icon.ClipboardPaste size={20} />} />
+                    <Tooltip placement='top' arrow={false} title='Create gif animate'>
+                        <Button shape="round" type="default" size="large" icon={<Icon.ImagePlay size={20} />} />
                     </Tooltip>
                 </div>
             </div>

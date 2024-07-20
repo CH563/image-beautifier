@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import Icon from '@components/Icon';
-import { Button, Slider, Radio, ColorPicker } from 'antd';
+import { Button, Slider, Radio, ColorPicker, InputNumber } from 'antd';
 import stores from '@stores';
 import backgroundConfig from '@utils/backgroundConfig';
 import { cn } from '@utils/utils';
@@ -15,6 +15,7 @@ export default observer(() => {
     }
     return (
         <div className="bg-white flex flex-col gap-2 p-4 md:w-[340px] border-l border-l-gray-50 shadow-lg relative z-10 select-none">
+            <div className="p-2 border border-gray-3 rounded-md hover:border-blue-500 cursor-pointer">22</div>
             <div className="[&_label]:font-semibold [&_label]:text-sm">
                 <label>Quick</label>
                 <div className="flex gap-4 items-center py-2">
@@ -106,6 +107,27 @@ export default observer(() => {
                             )
                         })}
                     </Radio.Group>
+                </div>
+            </div>
+            <div className="[&_label]:font-semibold [&_label]:text-sm">
+                <label>Size</label>
+                <div className="flex gap-2 items-center py-2">
+                    <InputNumber
+                        min={1}
+                        prefix={<span className="opacity-60 mx-1">W</span>}
+                        className="flex-1"
+                    />
+                    <span className="text-xs opacity-50">x</span>
+                    <InputNumber
+                        min={1}
+                        prefix={<span className="opacity-60 mx-1">H</span>}
+                        className="flex-1"
+                    />
+                    <Button
+                        type='text'
+                        shape='circle'
+                        icon={<Icon.ListCollapse size={18} />}
+                    ></Button>
                 </div>
             </div>
         </div>

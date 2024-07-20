@@ -13,6 +13,7 @@ export default defineConfig({
       '@style': resolve('./src/style'),
       '@stores': resolve('./src/stores/index.js'),
       '@utils': resolve('./src/utils'),
+      '@hooks': resolve('./src/hooks'),
     },
     extensions: [".mjs", ".js", ".ts", ".jsx", ".tsx", ".json"], // 省略扩展名
   },

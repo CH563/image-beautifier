@@ -1,5 +1,4 @@
 import { makeAutoObservable, toJS } from 'mobx';
-import demoPng from '@assets/demo.png';
 
 class Editor {
     img = {};

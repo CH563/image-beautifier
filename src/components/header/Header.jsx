@@ -24,6 +24,7 @@ export default observer(() => {
     const handleSelectEmoji = (emoji) => {
         const x = stores.option.frameConf.width / 2 - 24;
         const y = stores.option.frameConf.height / 2 - 24;
+        stores.editor.setUseTool(null);
         stores.editor.addShape({
             id: nanoid(),
             type: 'emoji',
@@ -36,11 +37,12 @@ export default observer(() => {
     }
     const toggleMove = () => {
         const is = !isMove;
+        stores.editor.setUseTool(null);
         setIsMove(is);
         stores.editor.app.config.move.drag = is;
     }
     return (
-        <div className='flex items-center justify-center shrink-0 gap-3 bg-white py-2 px-5 border-b border-b-gray-50 shadow-sm relative z-[11]'>
+        <div className='flex items-center justify-center shrink-0 gap-3 bg-white py-2 px-5 border-b border-b-gray-50 shadow-sm relative z-[11] select-none'>
             <div className='flex gap-1 justify-center items-center'>
                 <Tooltip placement='bottom' arrow={false} title='Undo'>
                     <Button
