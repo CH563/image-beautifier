@@ -5,6 +5,7 @@ import { Button, Slider, Radio, ColorPicker, InputNumber } from 'antd';
 import stores from '@stores';
 import backgroundConfig from '@utils/backgroundConfig';
 import { cn } from '@utils/utils';
+import SizeBar from './SizeBar';
 
 
 export default observer(() => {
@@ -15,7 +16,7 @@ export default observer(() => {
     }
     return (
         <div className="bg-white flex flex-col gap-2 p-4 md:w-[340px] border-l border-l-gray-50 shadow-lg relative z-10 select-none">
-            <div className="p-2 border border-gray-3 rounded-md hover:border-blue-500 cursor-pointer">22</div>
+            <SizeBar />
             <div className="[&_label]:font-semibold [&_label]:text-sm">
                 <label>Quick</label>
                 <div className="flex gap-4 items-center py-2">

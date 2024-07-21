@@ -1,5 +1,6 @@
 import {
     Camera,
+    Check,
     Square,
     Circle,
     Slash,
@@ -9,6 +10,8 @@ import {
     Undo,
     Redo,
     ChevronRight,
+    ChevronDown,
+    ChevronUp,
     RotateCcw,
     ZoomIn,
     ZoomOut,
@@ -28,6 +31,7 @@ import {
 
 export default {
     Camera,
+    Check,
     Square,
     Circle,
     Slash,
@@ -37,6 +41,8 @@ export default {
     Undo,
     Redo,
     ChevronRight,
+    ChevronDown,
+    ChevronUp,
     RotateCcw,
     ZoomIn,
     ZoomOut,
