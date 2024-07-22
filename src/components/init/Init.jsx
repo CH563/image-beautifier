@@ -18,6 +18,10 @@ export default observer(() => {
             type: file.type,
             name: file.name
         });
+        if (stores.option.size.type === 'auto') {
+            const margin = image.width * 0.1;
+            stores.option.setFrameSize(image.width + margin, image.height + margin);
+        }
     }
     const beforeUpload = async (file) => {
         await getFile(file);

@@ -8,19 +8,15 @@ import { computedSize } from '@utils/utils';
 export default observer(({ parent }) => {
     const [image, box, flow] = useMemo(() => {
         const image = new Image({
-            width: 640,
-            height: 427,
-            url: stores.editor.img.src
+            url: stores.editor.img.src,
         });
         const box = new Flow({
-            width: 640,
-            height: 427,
             flowAlign: 'center',
             overflow: 'hide',
             scale: 1,
             children: [image]
         });
-        const flow = new Flow({ children: [box], width: stores.option.frameConf.width, height: stores.option.frameConf.height, flowAlign: 'center', zIndex: 0 });
+        const flow = new Flow({ children: [box], width: stores.option.frameConf.width, height: stores.option.frameConf.height, zIndex: 0 });
         return [image, box, flow];
     }, [parent]);
 
@@ -54,12 +50,29 @@ export default observer(({ parent }) => {
 
     useEffect(() => {
         box.scale = stores.option.scale;
-    }, [stores.option.scale])
+    }, [stores.option.scale]);
+
+    useEffect(() => {
+        image.url = stores.editor.img.src;
+    }, [stores.editor.img.src]);
+
+    useEffect(() => {
+        image.scaleX = stores.option.scaleX ? -1 : 1;
+    }, [stores.option.scaleX]);
+
+    useEffect(() => {
+        image.scaleY = stores.option.scaleY ? -1 : 1;
+    }, [stores.option.scaleY]);
+
+    useEffect(() => {
+        flow.flowAlign = stores.option.align;
+    }, [stores.option.align]);
 
     useEffect(() => {
         flow.width = stores.option.frameConf.width;
         flow.height = stores.option.frameConf.height;
-        const { width, height } = computedSize(stores.editor.img.width, stores.editor.img.height, stores.option.frameConf.width - 40, stores.option.frameConf.height - 40);
+        const margin = stores.option.frameConf.width * 0.1;
+        const { width, height } = computedSize(stores.editor.img.width, stores.editor.img.height, stores.option.frameConf.width - margin, stores.option.frameConf.height - margin);
         image.width = width - stores.option.padding;
         image.height = height - stores.option.padding;
         box.width = width;

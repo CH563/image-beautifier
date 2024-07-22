@@ -122,20 +122,34 @@ export default observer(({target}) => {
 
         addListener(target, onResize);
     
-        setTimeout(() => {
-            const { width, height } = target.getBoundingClientRect();
-            app.tree.zoom('fit', 100);
-            if (stores.option.frameConf.width < width && stores.option.frameConf.height < height) {
-                app.tree.zoom(1);
-            }
-            stores.editor.setScale(app.tree.scale);
-        }, 10);
+        // setTimeout(() => {
+        //     const { width, height } = target.getBoundingClientRect();
+        //     app.tree.zoom('fit', 100);
+        //     if (stores.option.frameConf.width < width && stores.option.frameConf.height < height) {
+        //         app.tree.zoom(1);
+        //     }
+        //     stores.editor.setScale(app.tree.scale);
+        // }, 10);
 
         return (() => {
             removeListener(target, onResize);
             stores.editor.destroy();
         });
     }, [target]);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            const { width, height } = target.getBoundingClientRect();
+            stores.editor.app.tree.zoom('fit', 100);
+            if (stores.option.frameConf.width < width && stores.option.frameConf.height < height) {
+                stores.editor.app.tree.zoom(1);
+            }
+            stores.editor.setScale(stores.editor.app.tree.scale);
+        }, 20);
+        return (() => {
+            clearTimeout(timer);
+        })
+    }, [stores.option.frameConf.width, stores.option.frameConf.height]);
 
     return (<>
         {

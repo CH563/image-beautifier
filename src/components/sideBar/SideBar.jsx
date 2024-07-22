@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import Icon from '@components/Icon';
-import { Button, Slider, Radio, ColorPicker, InputNumber } from 'antd';
+import { Button, Slider, Radio, ColorPicker } from 'antd';
 import stores from '@stores';
 import backgroundConfig from '@utils/backgroundConfig';
 import { cn } from '@utils/utils';
 import SizeBar from './SizeBar';
+import CropperImage from './CropperImage';
+import Position from './Position';
 
 
 export default observer(() => {
@@ -20,26 +22,30 @@ export default observer(() => {
             <div className="[&_label]:font-semibold [&_label]:text-sm">
                 <label>Quick</label>
                 <div className="flex gap-4 items-center py-2">
+                    <CropperImage />
                     <Button
                         type='text'
                         shape='circle'
-                        icon={<Icon.Crop size={18} />}
-                    ></Button>
-                    <Button
-                        type='text'
-                        shape='circle'
+                        onClick={() => stores.option.toggleFlip('x')}
                         icon={<Icon.FlipHorizontal2 size={18} />}
                     ></Button>
                     <Button
                         type='text'
                         shape='circle'
+                        onClick={() => stores.option.toggleFlip('y')}
                         icon={<Icon.FlipVertical2 size={18} />}
                     ></Button>
-                    <Button
+                    <Position />
+                    {/* <Button
+                        type='text'
+                        shape='circle'
+                        icon={<Icon.Box size={18} />}
+                    ></Button> */}
+                    {/* <Button
                         type='text'
                         shape='circle'
                         icon={<Icon.Sunset size={18} />}
-                    ></Button>
+                    ></Button> */}
                 </div>
             </div>
             <div className="[&_label]:font-semibold [&_label]:text-sm">
@@ -108,27 +114,6 @@ export default observer(() => {
                             )
                         })}
                     </Radio.Group>
-                </div>
-            </div>
-            <div className="[&_label]:font-semibold [&_label]:text-sm">
-                <label>Size</label>
-                <div className="flex gap-2 items-center py-2">
-                    <InputNumber
-                        min={1}
-                        prefix={<span className="opacity-60 mx-1">W</span>}
-                        className="flex-1"
-                    />
-                    <span className="text-xs opacity-50">x</span>
-                    <InputNumber
-                        min={1}
-                        prefix={<span className="opacity-60 mx-1">H</span>}
-                        className="flex-1"
-                    />
-                    <Button
-                        type='text'
-                        shape='circle'
-                        icon={<Icon.ListCollapse size={18} />}
-                    ></Button>
                 </div>
             </div>
         </div>

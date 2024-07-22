@@ -49,4 +49,53 @@
     .ant-radio-wrapper-checked .h-8 {
         box-shadow: 0 0 0 2px #fff, 0 0 0 4px rgba(25, 0, 255, 0.582);
     }
+    .position-block {
+        @apply relative;
+        @apply after:block;
+        @apply after:transition-all;
+        @apply after:w-8;
+        @apply after:h-8;
+        @apply after:rounded-md;
+        @apply after:border;
+        @apply after:border-blue-300;
+        @apply after:bg-blue-100;
+        @apply after:absolute;
+        @apply after:z-10;
+    }
+    .position-block.top-left{
+        @apply after:top-0;
+        @apply after:left-0;
+    }
+    .position-block.top{
+        @apply after:top-0;
+        @apply after:left-8;
+    }
+    .position-block.top-right{
+        @apply after:top-0;
+        @apply after:right-0;
+    }
+    .position-block.right{
+        @apply after:top-8;
+        @apply after:right-0;
+    }
+    .position-block.bottom-right{
+        @apply after:bottom-0;
+        @apply after:right-0;
+    }
+    .position-block.bottom{
+        @apply after:bottom-0;
+        @apply after:left-8;
+    }
+    .position-block.bottom-left{
+        @apply after:bottom-0;
+        @apply after:left-0;
+    }
+    .position-block.left{
+        @apply after:top-8;
+        @apply after:left-0;
+    }
+    .position-block.center{
+        @apply after:top-8;
+        @apply after:left-8;
+    }
 }

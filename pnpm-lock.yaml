@@ -32,6 +32,9 @@ dependencies:
   clsx:
     specifier: ^2.1.1
     version: 2.1.1
+  cropperjs:
+    specifier: ^1.6.2
+    version: 1.6.2
   emoji-mart:
     specifier: ^5.6.0
     version: 5.6.0
@@ -56,6 +59,9 @@ dependencies:
   react:
     specifier: ^18.3.1
     version: 18.3.1
+  react-cropper:
+    specifier: ^2.3.3
+    version: 2.3.3(react@18.3.1)
   react-dom:
     specifier: ^18.3.1
     version: 18.3.1(react@18.3.1)
@@ -1729,6 +1735,10 @@ packages:
     resolution: {integrity: sha512-2KV8NhB5JqC3ky0r9PMCAZKbUHSwtEo4CwCs0KXgruG43gX5PMqDEBbVU4OUzw2MuAWUfsuFmWvEKG5QRfSnJA==}
     dependencies:
       toggle-selection: 1.0.6
+    dev: false
+
+  /cropperjs@1.6.2:
+    resolution: {integrity: sha512-nhymn9GdnV3CqiEHJVai54TULFAE3VshJTXSqSJKa8yXAKyBKDWdhHarnlIPrshJ0WMFTGuFvG02YjLXfPiuOA==}
     dev: false
 
   /cross-spawn@7.0.3:
@@ -3606,6 +3616,15 @@ packages:
       rc-util: 5.43.0(react-dom@18.3.1)(react@18.3.1)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
+    dev: false
+
+  /react-cropper@2.3.3(react@18.3.1):
+    resolution: {integrity: sha512-zghiEYkUb41kqtu+2jpX2Ntigf+Jj1dF9ew4lAobPzI2adaPE31z0p+5TcWngK6TvmWQUwK3lj4G+NDh1PDQ1w==}
+    peerDependencies:
+      react: '>=17.0.2'
+    dependencies:
+      cropperjs: 1.6.2
+      react: 18.3.1
     dev: false
 
   /react-dom@18.3.1(react@18.3.1):
