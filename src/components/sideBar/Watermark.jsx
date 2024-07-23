@@ -9,7 +9,7 @@ export default observer(() => {
     const [useWater, setUseWater] = useState(false);
     const [waterCont, setWaterCont] = useState('ShotEasy');
     const [waterColor, setWaterColor] = useState('#00000030');
-    const [direction, setDirection] = useState(22);
+    const [direction, setDirection] = useState(45);
     const handleColorChange = (color) => {
         setWaterColor(typeof color === 'string' ? color : color.toRgbString());
     };
@@ -42,8 +42,8 @@ export default observer(() => {
                         <label>Direction</label>
                         <div>
                             <Radio.Group defaultValue={direction} onChange={(e) => setDirection(e.target.value)} size="small">
-                                <Radio.Button value={-22}><Icon.ArrowUpRight size={16} className="mt-[3px]" /></Radio.Button>
-                                <Radio.Button value={22}><Icon.ArrowDownRight size={16} className="mt-[3px]" /></Radio.Button>
+                                <Radio.Button value={-45}><Icon.ArrowUpRight size={16} className="mt-[3px]" /></Radio.Button>
+                                <Radio.Button value={45}><Icon.ArrowDownRight size={16} className="mt-[3px]" /></Radio.Button>
                             </Radio.Group>
                         </div>
                     </div>

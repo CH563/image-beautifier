@@ -13,9 +13,11 @@ const toolList = ['Square', 'SquareFill', 'Circle', 'Slash', 'MoveDownLeft', 'Pe
 export default observer(() => {
     const [isMove, setIsMove] = useState(false);
     const exportPng = () => {
-        stores.editor.app.tree.export('png', 0.9).then(result => {
-            toDownloadFile(result.data, 'aa.png')
-        })
+        // stores.editor.app.tree.export('png', 0.9).then(result => {
+        //     toDownloadFile(result.data, 'aa.png')
+        // })
+        const json = stores.editor.app.tree.toJSON();
+        console.log(json);
     };
     const selectTool = (type) => {
         const { useTool } = stores.editor;

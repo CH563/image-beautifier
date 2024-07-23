@@ -30,7 +30,10 @@ import {
     Maximize,
     ListCollapse,
     ArrowUpRight,
-    ArrowDownRight
+    ArrowDownRight,
+    ImageDown,
+    Copy,
+    Settings2
 } from 'lucide-react';
 
 export default {
@@ -65,5 +68,8 @@ export default {
     Maximize,
     ListCollapse,
     ArrowUpRight,
-    ArrowDownRight
+    ArrowDownRight,
+    ImageDown,
+    Copy,
+    Settings2
 };

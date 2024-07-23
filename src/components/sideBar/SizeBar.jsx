@@ -92,7 +92,7 @@ export default observer(() => {
             }}
             onOpenChange={handleOpenChange}
         >
-            <div className={cn('px-3 py-1.5 border border-gray-200 gap-3 shadow-sm overflow-hidden max-h-12 rounded-md hover:border-blue-500 [&_svg]:hover:text-blue-500 cursor-pointer flex items-center', open && 'shadow-md')} ref={box}>
+            <div className={cn('px-3 py-1.5 border shrink-0 border-gray-200 gap-3 shadow-sm overflow-hidden max-h-12 rounded-md hover:border-blue-500 [&_svg]:hover:text-blue-500 cursor-pointer flex items-center', open && 'shadow-md')} ref={box}>
                 <div
                     className='border border-black/50 bg-black/10 w-4 rounded-sm'
                     style={{ aspectRatio: stores.option.frameConf.width / stores.option.frameConf.height }}
