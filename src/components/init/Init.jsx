@@ -9,7 +9,8 @@ const { Dragger } = Upload;
 
 export default observer(() => {
     const getFile = async (file) => {
-        const imgUrl = window.URL.createObjectURL(file);
+        const DOMURL = window.URL || window.webkitURL || window;
+        const imgUrl = DOMURL.createObjectURL(file);
         const image = await getImage(imgUrl)
         stores.editor.setImg({
             src: imgUrl,
@@ -19,7 +20,7 @@ export default observer(() => {
             name: file.name
         });
         if (stores.option.size.type === 'auto') {
-            const margin = image.width * 0.1;
+            const margin = image.width * 0.2;
             stores.option.setFrameSize(image.width + margin, image.height + margin);
         }
     }

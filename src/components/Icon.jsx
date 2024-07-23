@@ -28,7 +28,9 @@ import {
     ClipboardPaste,
     ImagePlay,
     Maximize,
-    ListCollapse
+    ListCollapse,
+    ArrowUpRight,
+    ArrowDownRight
 } from 'lucide-react';
 
 export default {
@@ -61,5 +63,7 @@ export default {
     ClipboardPaste,
     ImagePlay,
     Maximize,
-    ListCollapse
+    ListCollapse,
+    ArrowUpRight,
+    ArrowDownRight
 };

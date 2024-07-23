@@ -32,7 +32,7 @@ export default observer(() => {
     const onSet = (value) => {
         hide();
         if (value.type === 'auto' && stores.editor.img.width) {
-            const margin = stores.editor.img.width * 0.1;
+            const margin = stores.editor.img.width * 0.2;
             stores.option.setSize({...value, width: stores.editor.img.width + margin, height: stores.editor.img.height + margin});
             return;
         }

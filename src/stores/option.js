@@ -1,4 +1,4 @@
-import { makeAutoObservable } from 'mobx';
+import { makeAutoObservable, toJS } from 'mobx';
 import backgroundConfig from '@utils/backgroundConfig';
 
 class Option {
@@ -12,6 +12,8 @@ class Option {
     frame = 'none';
     background = 'default_1';
     align = 'center';
+    waterImg = null;
+    waterIndex = 1;
     size = {
         type: 'auto',
         title: 'Auto'
@@ -29,6 +31,11 @@ class Option {
     constructor() {
         makeAutoObservable(this);
     }
+
+    get waterSvg() {
+        return toJS(this.waterImg);
+    }
+
     setScale(value) {
         this.scale = value;
     }
@@ -76,6 +83,12 @@ class Option {
         if (type === 'y') {
             this.scaleY = !this.scaleY;
         }
+    }
+    setWaterImg(value) {
+        this.waterImg = value;
+    }
+    setWaterIndex(value) {
+        this.waterIndex = value;
     }
 }
 

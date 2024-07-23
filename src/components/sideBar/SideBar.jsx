@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import Icon from '@components/Icon';
-import { Button, Slider, Radio, ColorPicker } from 'antd';
+import { Button, Slider, Radio, ColorPicker, Switch, Input } from 'antd';
 import stores from '@stores';
 import backgroundConfig from '@utils/backgroundConfig';
 import { cn } from '@utils/utils';
 import SizeBar from './SizeBar';
 import CropperImage from './CropperImage';
 import Position from './Position';
+import Watermark from './Watermark';
 
 
 export default observer(() => {
@@ -116,6 +117,7 @@ export default observer(() => {
                     </Radio.Group>
                 </div>
             </div>
+            <Watermark />
         </div>
     )
 });

@@ -8,6 +8,7 @@ import pencilPng from '@assets/pencil.png';
 import stores from '@stores';
 import FrameBox from './layers/FrameBox';
 import Screenshot from './layers/Screenshot';
+import Watermark from './layers/Watermark';
 import ShapeLine from './layers/ShapeLine';
 import { ScrollBar } from '@leafer-in/scroll'
 import { nanoid } from '@utils/utils';
@@ -159,6 +160,7 @@ export default observer(({target}) => {
                         <ShapeLine key={item.id} {...item} />
                     ))}
                     {stores.editor.img?.src && <Screenshot />}
+                    {stores.option.waterImg && <Watermark />}
             </FrameBox>
         }
     </>);

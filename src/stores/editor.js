@@ -1,7 +1,12 @@
 import { makeAutoObservable, toJS } from 'mobx';
+import demoPng from '@assets/demo.png'
 
 class Editor {
-    img = {};
+    img = {
+        src: demoPng,
+        width: 640,
+        height: 427
+    };
     app = null;
     scale = 100;
     useTool = null;
