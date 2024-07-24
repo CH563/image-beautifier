@@ -32,7 +32,7 @@ export default observer(() => {
                 <Switch defaultChecked={useWater} onChange={setUseWater} size="small" className="bg-slate-200" />
             </div>
             {useWater &&
-                <div className="[&_label]:font-semibold [&_label]:text-xs grid gap-3 pl-2">
+                <div className="[&_label]:font-semibold [&_label]:text-xs grid gap-3 pl-2 pt-2">
                     <Input defaultValue={waterCont} placeholder="Watermark content" onChange={(e) => setWaterCont(e.target.value)} />
                     <div className="flex items-center justify-between">
                         <label>Color</label>

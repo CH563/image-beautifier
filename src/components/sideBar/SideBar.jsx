@@ -9,6 +9,7 @@ import SizeBar from './SizeBar';
 import CropperImage from './CropperImage';
 import Position from './Position';
 import Watermark from './Watermark';
+import DownloadBar from './DownloadBar';
 
 
 export default observer(() => {
@@ -38,6 +39,7 @@ export default observer(() => {
                             icon={<Icon.FlipVertical2 size={18} />}
                         ></Button>
                         <Position />
+                        {/* Todo */}
                         {/* <Button
                             type='text'
                             shape='circle'
@@ -120,16 +122,7 @@ export default observer(() => {
                 </div>
                 <Watermark />
             </div>
-            <div className="shrink-0 p-4 flex gap-4 justify-center items-center">
-                <Button type="primary" icon={<Icon.ImageDown size={18} />} className="bg-black h-10 hover:bg-gray-900">
-                    <div className="leading-4">
-                        <div className="text-sm leading-4 font-semibold">Download</div>
-                        <div className="text-xs">1x as PNG</div>
-                    </div>
-                </Button>
-                <Button type="primary" icon={<Icon.Copy size={18} />} className="bg-black h-10 hover:bg-gray-900" />
-                <Button icon={<Icon.Settings2 size={18} />} className="h-10" />
-            </div>
+            <DownloadBar />
         </div>
     )
 });
