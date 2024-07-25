@@ -2,7 +2,9 @@
 
 ---
 
-![preview](https://github.com/CH563/image-beautifier/preview.png)
+![preview](https://github.com/CH563/image-beautifier/blob/main/preview.png)
+
+预览地址：[https://screenshot.shoteasy.fun/](https://screenshot.shoteasy.fun/)
 
 - 用于截图美化
 - 图片批注
