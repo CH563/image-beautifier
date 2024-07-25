@@ -33,7 +33,9 @@ import {
     ArrowDownRight,
     ImageDown,
     Copy,
-    Settings2
+    Settings2,
+    ChevronLeft,
+    Pipette
 } from 'lucide-react';
 
 export default {
@@ -71,5 +73,7 @@ export default {
     ArrowDownRight,
     ImageDown,
     Copy,
-    Settings2
+    Settings2,
+    ChevronLeft,
+    Pipette
 };

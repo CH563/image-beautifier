@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import Icon from '@components/Icon';
-import { Button, Slider, Radio, ColorPicker } from 'antd';
+import { Button, Slider, Radio } from 'antd';
+import ColorPicker from '@components/ColorPicker';
 import stores from '@stores';
 import backgroundConfig from '@utils/backgroundConfig';
 import { cn } from '@utils/utils';
@@ -10,6 +11,7 @@ import CropperImage from './CropperImage';
 import Position from './Position';
 import Watermark from './Watermark';
 import DownloadBar from './DownloadBar';
+import DrawerBar from './DrawerBar';
 
 
 export default observer(() => {
@@ -123,6 +125,7 @@ export default observer(() => {
                 <Watermark />
             </div>
             <DownloadBar />
+            <DrawerBar showMore={showMore} onChange={setShowMore} />
         </div>
     )
 });

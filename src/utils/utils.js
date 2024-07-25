@@ -2,6 +2,13 @@ import { customAlphabet } from 'nanoid/non-secure';
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
+export const isAppleDevice = () => {
+    const PLATFORM = typeof navigator === 'object' ? navigator.platform : '';
+    return /Mac|iPod|iPhone|iPad/.test(PLATFORM);
+};
+
+export const modKey = (isAppleDevice() ? '⌘' : 'Ctrl');
+
 export const supportImg = [
     'image/jpeg',
     'image/png',

@@ -24,7 +24,7 @@ export default observer(() => {
                     height,
                 }));
                 if (stores.option.size.type === 'auto') {
-                    const margin = width * 0.2;
+                    const margin = Math.round(width * 0.2);
                     stores.option.setFrameSize(width + margin, height + margin);
                 }
             }

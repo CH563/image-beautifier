@@ -21,7 +21,14 @@
     --c-scroll-hover: #bbbbbb;
     --ant-color-primary: #1677ff;
     scrollbar-color: var(--c-scrollbar) var(--c-bg);
-    --primary-glow: conic-gradient(from 180deg at 50% 50%,#16abff33 0deg,#0885ff33 55deg,#54d6ff33 120deg,#0071ff33 160deg,transparent 360deg);
+    --primary-glow: conic-gradient(
+        from 180deg at 50% 50%,
+        #16abff33 0deg,
+        #0885ff33 55deg,
+        #54d6ff33 120deg,
+        #0071ff33 160deg,
+        transparent 360deg
+    );
 }
 
 @layer base {
@@ -62,40 +69,57 @@
         @apply after:absolute;
         @apply after:z-10;
     }
-    .position-block.top-left{
+    .position-block.top-left {
         @apply after:top-0;
         @apply after:left-0;
     }
-    .position-block.top{
+    .position-block.top {
         @apply after:top-0;
         @apply after:left-8;
     }
-    .position-block.top-right{
+    .position-block.top-right {
         @apply after:top-0;
         @apply after:right-0;
     }
-    .position-block.right{
+    .position-block.right {
         @apply after:top-8;
         @apply after:right-0;
     }
-    .position-block.bottom-right{
+    .position-block.bottom-right {
         @apply after:bottom-0;
         @apply after:right-0;
     }
-    .position-block.bottom{
+    .position-block.bottom {
         @apply after:bottom-0;
         @apply after:left-8;
     }
-    .position-block.bottom-left{
+    .position-block.bottom-left {
         @apply after:bottom-0;
         @apply after:left-0;
     }
-    .position-block.left{
+    .position-block.left {
         @apply after:top-8;
         @apply after:left-0;
     }
-    .position-block.center{
+    .position-block.center {
         @apply after:top-8;
         @apply after:left-8;
+    }
+    @keyframes shake {
+        0% {
+            transform: translateX(0);
+        }
+        25% {
+            transform: translateX(0.5rem);
+        }
+        75% {
+            transform: translateX(-0.5rem);
+        }
+        100% {
+            transform: translateX(0);
+        }
+    }
+    .invalid {
+        animation: shake 0.2s ease-in-out 0s 2;
     }
 }

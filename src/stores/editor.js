@@ -1,18 +1,16 @@
-import { makeAutoObservable, toJS } from 'mobx';
+import { makeAutoObservable, toJS, action } from 'mobx';
 import demoPng from '@assets/demo.png'
-
+let timer;
 class Editor {
-    img = {
-        src: demoPng,
-        width: 640,
-        height: 427
-    };
+    img = {};
+    invalid = false;
     app = null;
     scale = 100;
     useTool = null;
     annotateColor = '#ff0000';
     strokeWidth = 4;
     shapes = new Map();
+    message = null;
     constructor () {
         makeAutoObservable(this)
     }
@@ -25,8 +23,29 @@ class Editor {
         return this.useTool === 'Pencil' ? 'pencil' : this.useTool ? 'crosshair' : 'auto'
     }
 
+    get isEditing() {
+        const is = !!this.app?.tree;
+        if (!is) {
+            this.message.info('Please add a image');
+            this.setInvalid();
+        }
+        return is;
+    }
+
+    setInvalid() {
+        clearTimeout(timer);
+        this.invalid = true;
+        timer = setTimeout(action(() => {
+            this.invalid = false;
+        }), 200);
+    }
+
     setImg(value) {
         this.img = value;
+    }
+
+    setMessage(value) {
+        this.message = value;
     }
 
     getShape(id) {

@@ -12,6 +12,7 @@ import Watermark from './layers/Watermark';
 import ShapeLine from './layers/ShapeLine';
 import { ScrollBar } from '@leafer-in/scroll'
 import { nanoid } from '@utils/utils';
+import HotKeys from './HotKeys';
 import '@leafer-in/editor';
 import '@leafer-in/view';
 
@@ -152,16 +153,15 @@ export default observer(({target}) => {
         })
     }, [stores.option.frameConf.width, stores.option.frameConf.height]);
 
+    if (!stores.editor.app?.tree) return null;
     return (<>
-        {
-            stores.editor.app?.tree &&
-            <FrameBox parent={stores.editor.app.tree} cursor={stores.editor.cursor} {...stores.option.frameConf}>
-                    {stores.editor.shapesList.map((item) => (
-                        <ShapeLine key={item.id} {...item} />
-                    ))}
-                    {stores.editor.img?.src && <Screenshot />}
-                    {stores.option.waterImg && <Watermark />}
-            </FrameBox>
-        }
+        <FrameBox parent={stores.editor.app.tree} cursor={stores.editor.cursor} {...stores.option.frameConf}>
+                {stores.editor.shapesList.map((item) => (
+                    <ShapeLine key={item.id} {...item} />
+                ))}
+                {stores.editor.img?.src && <Screenshot />}
+                {stores.option.waterImg && <Watermark />}
+        </FrameBox>
+        <HotKeys />
     </>);
 });

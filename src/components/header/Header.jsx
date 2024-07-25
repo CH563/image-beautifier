@@ -1,29 +1,28 @@
 import { useState } from 'react';
 import { observer } from 'mobx-react-lite';
-import { Button, ColorPicker, Divider, Tooltip } from 'antd';
+import { Button, Divider } from 'antd';
 import { icons } from 'lucide-react';
 import Icon from '@components/Icon';
+import ColorPicker from '@components/ColorPicker';
 import { WidthDropdown } from '@components/header/WidthDropdown'
-import { toDownloadFile, nanoid } from '@utils/utils';
+import { nanoid } from '@utils/utils';
 import stores from '@stores';
 import EmojiSelect from './EmojiSelect';
+import Logo from './Logo';
 
 const toolList = ['Square', 'SquareFill', 'Circle', 'Slash', 'MoveDownLeft', 'Pencil', 'Smile'];
 
 export default observer(() => {
     const [isMove, setIsMove] = useState(false);
-    const exportPng = () => {
-        // stores.editor.app.tree.export('png', 0.9).then(result => {
-        //     toDownloadFile(result.data, 'aa.png')
-        // })
-        const json = stores.editor.app.tree.toJSON();
-        console.log(json);
-    };
+    // const handleUndo = () => {
+    // };
     const selectTool = (type) => {
+        if (!stores.editor.isEditing) return;
         const { useTool } = stores.editor;
         stores.editor.setUseTool(useTool === type ? null : type);
     }
     const handleSelectEmoji = (emoji) => {
+        if (!stores.editor.isEditing) return;
         const x = stores.option.frameConf.width / 2 - 24;
         const y = stores.option.frameConf.height / 2 - 24;
         stores.editor.setUseTool(null);
@@ -38,6 +37,7 @@ export default observer(() => {
         });
     }
     const toggleMove = () => {
+        if (!stores.editor.isEditing) return;
         const is = !isMove;
         stores.editor.setUseTool(null);
         setIsMove(is);
@@ -45,6 +45,9 @@ export default observer(() => {
     }
     return (
         <div className='flex items-center justify-center shrink-0 gap-3 bg-white py-2 px-5 border-b border-b-gray-50 shadow-sm relative z-[11] select-none'>
+            <div className="flex-1">
+                <Logo />
+            </div>
             {/* Todo */}
             {/* <div className='flex gap-1 justify-center items-center'>
                 <Tooltip placement='bottom' arrow={false} title='Undo'>
@@ -52,6 +55,7 @@ export default observer(() => {
                         type='text'
                         shape='circle'
                         icon={<Icon.Undo size={16} />}
+                        onClick={handleUndo}
                     ></Button>
                 </Tooltip>
                 <Tooltip placement='bottom' arrow={false} title='Redo'>
@@ -119,10 +123,8 @@ export default observer(() => {
                     onClick={toggleMove}
                 />
             </div>
-            <Divider type='vertical' />
-            <div className="flex gap-1 justify-center items-center text-xs text-slate-500">
-                {stores.option.frameConf.width} x {stores.option.frameConf.height} px
-            </div>
+            {/* <Divider type='vertical' /> */}
+            <div className="flex-1"></div>
         </div>
     );
 });

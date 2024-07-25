@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
 import Icon from '@components/Icon';
-import { Radio, ColorPicker, Switch, Input } from 'antd';
+import { Radio, Switch, Input } from 'antd';
+import ColorPicker from '@components/ColorPicker';
 import stores from '@stores';
 import { text2Svg } from '@utils/utils';
 
