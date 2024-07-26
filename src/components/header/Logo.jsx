@@ -11,8 +11,8 @@ export default () => {
                         <path d="M144 404C144 416.703 133.703 427 121 427C108.297 427 98 416.703 98 404C98 391.297 108.297 381 121 381C133.703 381 144 391.297 144 404Z" fill="#6616CB" />
                     </g>
                     <defs>
-                        <filter id="filter0_i_40_60" x="3" y="39" width="503.881" height="432.679" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-                            <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                        <filter id="filter0_i_40_60" x="3" y="39" width="503.881" height="432.679" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+                            <feFlood floodOpacity="0" result="BackgroundImageFix" />
                             <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
                             <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
                             <feOffset dx="-2" />

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { observer } from 'mobx-react-lite';
-import { Button, Divider } from 'antd';
+import { Button, Divider, Tooltip } from 'antd';
 import { icons } from 'lucide-react';
 import Icon from '@components/Icon';
 import ColorPicker from '@components/ColorPicker';
@@ -15,8 +15,9 @@ const toolList = ['Square', 'SquareFill', 'Circle', 'Slash', 'MoveDownLeft', 'Pe
 
 export default observer(() => {
     const [isMove, setIsMove] = useState(false);
-    // const handleUndo = () => {
-    // };
+    const handleUndo = () => {
+        console.log(stores.editor.app.toJSON())
+    };
     const selectTool = (type) => {
         if (!stores.editor.isEditing) return;
         const { useTool } = stores.editor;
@@ -52,7 +53,7 @@ export default observer(() => {
                 <Logo />
             </div>
             {/* Todo */}
-            {/* <div className='flex gap-1 justify-center items-center'>
+            <div className='flex gap-1 justify-center items-center'>
                 <Tooltip placement='bottom' arrow={false} title='Undo'>
                     <Button
                         type='text'
@@ -69,7 +70,7 @@ export default observer(() => {
                     ></Button>
                 </Tooltip>
             </div>
-            <Divider type='vertical' /> */}
+            <Divider type='vertical' />
             <div className='flex gap-1 justify-center items-center'>
                 {toolList.map(item => {
                     if (item === 'Smile') return (<EmojiSelect key={item} disabled={false} toSelect={handleSelectEmoji} />)
