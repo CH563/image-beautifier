@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "type": "module",
   "description": "Used to beautify image share display, add beautiful background, rounded corners, shadows, etc...",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
-    "dev": "vite --host",
+    "dev": "vite",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"

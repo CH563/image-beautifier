@@ -6,6 +6,7 @@ import Editor from '@components/editor/Editor';
 import SideBar from '@components/sideBar/SideBar';
 import Init from '@components/init/Init';
 import stores from '@stores';
+import '@style/main.css';
 
 export default observer(() => {
   const workplace = stores.editor.img?.src ? <Editor /> : <Init />
