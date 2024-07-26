@@ -4,6 +4,12 @@
 
 预览地址：[https://screenshot.shoteasy.fun/](https://screenshot.shoteasy.fun/)
 
+## 安装
+
+```bash
+npm install image-beautifier
+```
+
 - 用于截图美化
 - 图片批注
 - 修改尺寸，预设各个社媒平台发布的尺寸模板

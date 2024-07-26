@@ -48,6 +48,14 @@
     "tailwindcss": "^3.4.4",
     "vite": "^5.3.1"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CH563/image-beautifier.git"
+  },
+  "bugs": {
+    "url": "https://github.com/CH563/image-beautifier/issues"
+  },
+  "homepage": "https://github.com/CH563/image-beautifier",
   "author": "Chenliwen",
   "license": "MIT"
 }
