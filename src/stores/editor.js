@@ -92,6 +92,10 @@ class Editor {
         this.strokeWidth = value;
     }
 
+    clearImg() {
+        this.img = {};
+    }
+
     destroy() {
         this.app?.destroy();
         this.app = null;

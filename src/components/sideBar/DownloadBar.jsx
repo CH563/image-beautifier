@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import Icon from '@components/Icon';
-import { Button, Tooltip, Popover, Segmented, ConfigProvider } from 'antd';
+import { Button, Tooltip, Popover, Segmented, ConfigProvider, Popconfirm } from 'antd';
 import stores from '@stores';
 import { toDownloadFile, nanoid, modKey } from '@utils/utils';
 import useKeyboardShortcuts from '@hooks/useKeyboardShortcuts';
@@ -80,6 +80,9 @@ export default observer(() => {
         });
         setLoading(false);
     }
+    const confirm = () => {
+        stores.editor.clearImg();
+    }
     useKeyboardShortcuts(() => toDownload(), () => toCopy(), [toDownload, toCopy]);
     const content = (<div>
         <div className="p-2 [&_.ant-segmented]:w-full [&_.ant-segmented-item]:w-[33%]">
@@ -104,7 +107,7 @@ export default observer(() => {
         </div>
     </div>)
     return (
-        <div className='shrink-0 py-4 px-8 flex gap-4 justify-center items-center'>
+        <div className='shrink-0 py-4 px-6 flex gap-2 justify-center items-center'>
             <ConfigProvider
                 theme={{
                     components: {
@@ -145,19 +148,32 @@ export default observer(() => {
                     </Tooltip>
                 </div>
             </ConfigProvider>
-            <Popover
-                content={content}
-                trigger='click'
-                arrow={false}
-                placement="topRight"
-                open={open}
-                overlayStyle={{
-                    width: '320px',
-                }}
-                onOpenChange={handleOpenChange}
-            >
-                <Button size='large' icon={<Icon.Settings2 size={18} />} />
-            </Popover>
+            <div className="flex items-center gap-1">
+                <Popover
+                    content={content}
+                    trigger='click'
+                    arrow={false}
+                    placement="topRight"
+                    open={open}
+                    overlayStyle={{
+                        width: '320px',
+                    }}
+                    onOpenChange={handleOpenChange}
+                >
+                    <Button size='large' icon={<Icon.Settings2 size={18} />} />
+                </Popover>
+                {stores.editor.img?.src && 
+                    <Popconfirm
+                        title="Delete the screenshot"
+                        description="Are you sure to delete this screenshot?"
+                        onConfirm={confirm}
+                        okText="Yes"
+                        cancelText="No"
+                    >
+                        <Button size='large' icon={<Icon.Trash2 size={18} />} />
+                    </Popconfirm>
+                }
+            </div>
         </div>
     );
 });

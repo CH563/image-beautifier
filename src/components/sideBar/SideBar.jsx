@@ -24,7 +24,7 @@ export default observer(() => {
         <div className="bg-white flex flex-col md:w-[340px] border-l border-l-gray-50 shadow-lg relative z-10 select-none">
             <div className="flex-1 flex-col gap-2 p-4 overflow-y-auto overflow-x-hidden">
                 <SizeBar />
-                <div className="[&_label]:font-semibold [&_label]:text-sm">
+                <div className="[&_label]:font-semibold pt-2 [&_label]:text-sm">
                     <label>Quick</label>
                     <div className="flex gap-4 items-center py-2">
                         <CropperImage />

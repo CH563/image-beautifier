@@ -9,6 +9,7 @@ import { nanoid } from '@utils/utils';
 import stores from '@stores';
 import EmojiSelect from './EmojiSelect';
 import Logo from './Logo';
+import MediaLogo from './MediaLogo';
 
 const toolList = ['Square', 'SquareFill', 'Circle', 'Slash', 'MoveDownLeft', 'Pencil', 'Smile'];
 
@@ -20,12 +21,14 @@ export default observer(() => {
         if (!stores.editor.isEditing) return;
         const { useTool } = stores.editor;
         stores.editor.setUseTool(useTool === type ? null : type);
+        setIsMove(false);
     }
     const handleSelectEmoji = (emoji) => {
         if (!stores.editor.isEditing) return;
         const x = stores.option.frameConf.width / 2 - 24;
         const y = stores.option.frameConf.height / 2 - 24;
         stores.editor.setUseTool(null);
+        setIsMove(false);
         stores.editor.addShape({
             id: nanoid(),
             type: 'emoji',
@@ -124,7 +127,7 @@ export default observer(() => {
                 />
             </div>
             {/* <Divider type='vertical' /> */}
-            <div className="flex-1"></div>
+            <MediaLogo />
         </div>
     );
 });

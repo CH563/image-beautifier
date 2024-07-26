@@ -35,7 +35,8 @@ import {
     Copy,
     Settings2,
     ChevronLeft,
-    Pipette
+    Pipette,
+    Trash2
 } from 'lucide-react';
 
 export default {
@@ -75,5 +76,6 @@ export default {
     Copy,
     Settings2,
     ChevronLeft,
-    Pipette
+    Pipette,
+    Trash2
 };
