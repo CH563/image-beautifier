@@ -10,6 +10,19 @@
 npm install image-beautifier
 ```
 
+## 例子
+
+React 组件
+
+```jsx
+import { ImageBeautifier } from 'image-beautifier';
+import 'image-beautifier/lib/style.css';
+
+function App() {
+  return (<ImageBeautifier />);
+}
+```
+
 - 用于截图美化
 - 图片批注
 - 修改尺寸，预设各个社媒平台发布的尺寸模板
