@@ -112,7 +112,7 @@ export default observer(() => {
                             <Radio className="[&_.ant-radio]:hidden [&_span]:p-0 mr-0" value='default_1'>
                                 <div className={cn("w-8 h-8 rounded-full", backgroundConfig.default_1.class)}></div>
                             </Radio>
-                            {Object.keys(backgroundConfig).map((key, index) => {
+                            {Object.keys(backgroundConfig).map((key) => {
                                 if (key.includes('default') && key !== 'default_1') return (
                                     <Radio key={key} className="[&_.ant-radio]:hidden [&_span]:p-0 mr-0" value={key}>
                                         <div className={cn("w-8 h-8 rounded-full", backgroundConfig[key].class)}></div>

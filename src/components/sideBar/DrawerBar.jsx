@@ -2,9 +2,9 @@ import { Button, Drawer } from 'antd';
 import { observer } from 'mobx-react-lite';
 import Icon from '@components/Icon';
 import ColorPicker from '@components/ColorPicker';
-import backgroundConfig from '@utils/backgroundConfig';
 import stores from '@stores';
 import colorSvg from '@assets/color.svg';
+import { BackgroundSelect } from './BackgroundSelect';
 
 export default observer(({ showMore, onChange }) => {
     const onMoreClose = () => {
@@ -16,6 +16,9 @@ export default observer(({ showMore, onChange }) => {
             type: 'solid',
             color
         }
+    }
+    const onSelectChange = (key) => {
+        stores.option.setBackground(key);
     }
     return (
         <Drawer
@@ -47,9 +50,13 @@ export default observer(({ showMore, onChange }) => {
                         </ColorPicker>
                     </div>
                     <h4 className="text-sm font-bold py-2">Solid Colors</h4>
-                    <h4 className="text-sm font-bold pb-1 pt-2">Gradients</h4>
-                    <h4 className="text-sm font-bold pb-1 pt-2">Cosmic Gradients</h4>
-                    <h4 className="text-sm font-bold pb-1 pt-2">Desktop</h4>
+                    <BackgroundSelect type="solid" onChange={onSelectChange} value={stores.option.background} />
+                    <h4 className="text-sm font-bold py-2">Gradients</h4>
+                    <BackgroundSelect type="gradient" onChange={onSelectChange} value={stores.option.background} />
+                    <h4 className="text-sm font-bold py-2">Cosmic Gradients</h4>
+                    <BackgroundSelect type="cosmic" onChange={onSelectChange} value={stores.option.background} />
+                    <h4 className="text-sm font-bold py-2">Desktop</h4>
+                    <BackgroundSelect type="desktop" onChange={onSelectChange} value={stores.option.background} />
                 </div>
             </div>
         </Drawer>

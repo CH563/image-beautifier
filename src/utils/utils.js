@@ -77,6 +77,43 @@ export const getImage = (src) => {
     });
 };
 
+// type: ['top-left', 'top', 'top-right', 'left', 'center', 'right', 'bottom-left', 'bottom', 'bottom-right']
+export const getPosition = (type, xw, xh) => {
+    if (type === 'top-left') return {
+        x: 0,
+        y: 0
+    }
+    if (type === 'top') return {
+        x: xw / 2,
+        y: 0
+    }
+    if (type === 'top-right') return {
+        x: xw,
+        y: 0
+    }
+    if (type === 'left') return {
+        x: 0,
+        y: xh /2
+    }
+    if (type === 'right') return {
+        x: xw,
+        y: xh / 2
+    }
+    if (type === 'bottom-left') return {
+        x: 0,
+        y: xh
+    }
+    if (type === 'bottom') return {
+        x: xw / 2,
+        y: xh
+    }
+    if (type === 'bottom-right') return {
+        x: xw,
+        y: xh
+    }
+    return { x: xw / 2, y: xh / 2 };
+}
+
 export const calculateRotatedRectDimensions = (width, height, angleDegrees) => {
     const angleRadians = angleDegrees * (Math.PI / 180);
     const newWidth = Math.abs(width * Math.cos(angleRadians)) + Math.abs(height * Math.sin(angleRadians));

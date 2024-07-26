@@ -1,23 +1,21 @@
 import { useEffect, useMemo } from 'react';
 import { observer } from 'mobx-react-lite';
-import { Image } from 'leafer-ui';
-import { Flow } from '@leafer-in/flow';
+import { Image, Box } from 'leafer-ui';
 import stores from '@stores';
-import { computedSize } from '@utils/utils';
+import { computedSize, getPosition } from '@utils/utils';
 
 export default observer(({ parent }) => {
-    const [image, box, flow] = useMemo(() => {
+    const [image, box] = useMemo(() => {
         const image = new Image({
             url: stores.editor.img.src,
+            origin: 'center'
         });
-        const box = new Flow({
-            flowAlign: 'center',
+        const box = new Box({
             overflow: 'hide',
             scale: 1,
             children: [image]
         });
-        const flow = new Flow({ children: [box], width: stores.option.frameConf.width, height: stores.option.frameConf.height, zIndex: 0 });
-        return [image, box, flow];
+        return [image, box];
     }, [parent]);
 
     useEffect(() => {
@@ -65,24 +63,26 @@ export default observer(({ parent }) => {
     }, [stores.option.scaleY]);
 
     useEffect(() => {
-        flow.flowAlign = stores.option.align;
-    }, [stores.option.align]);
-
-    useEffect(() => {
-        flow.width = stores.option.frameConf.width;
-        flow.height = stores.option.frameConf.height;
         const margin = Math.round(stores.option.frameConf.width * 0.2);
         const { width, height } = computedSize(stores.editor.img.width, stores.editor.img.height, stores.option.frameConf.width - margin, stores.option.frameConf.height - margin);
         image.width = width - stores.option.padding;
         image.height = height - stores.option.padding;
         box.width = width;
         box.height = height;
-    }, [stores.option.frameConf.width, stores.option.frameConf.height, stores.option.padding]);
+        box.origin = stores.option.align;
+        const { x, y } = getPosition(stores.option.align, stores.option.frameConf.width - width, stores.option.frameConf.height - height);
+        box.x = x;
+        box.y = y;
+        if (stores.option.padding > 0) {
+            image.x = stores.option.padding / 2;
+            image.y = stores.option.padding / 2;
+        }
+    }, [stores.option.frameConf.width, stores.option.frameConf.height, stores.option.padding, stores.option.align]);
 
     useEffect(() => {
-        parent.add(flow);
+        parent.add(box);
         return (() => {
-            flow.remove();
+            box.remove();
         })
     }, [parent]);
     return null;
