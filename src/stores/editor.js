@@ -1,5 +1,5 @@
 import { makeAutoObservable, toJS, action } from 'mobx';
-import demoPng from '@assets/demo.png'
+
 let timer;
 class Editor {
     img = {};
@@ -99,6 +99,8 @@ class Editor {
     destroy() {
         this.app?.destroy();
         this.app = null;
+        this.shapes.clear();
+        this.setUseTool(null);
     }
 }
 
