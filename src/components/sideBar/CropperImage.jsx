@@ -4,6 +4,7 @@ import Icon from '@components/Icon';
 import { Button, Tooltip, Modal } from 'antd';
 import stores from '@stores';
 import Cropper from "react-cropper";
+import { getMargin } from "@utils/utils";
 import "cropperjs/dist/cropper.css";
 
 export default observer(() => {
@@ -24,7 +25,7 @@ export default observer(() => {
                     height,
                 }));
                 if (stores.option.size.type === 'auto') {
-                    const margin = Math.round(width * 0.2);
+                    const margin = getMargin(width, height);
                     stores.option.setFrameSize(width + margin, height + margin);
                 }
             }

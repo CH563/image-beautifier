@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
-import { App, ResizeEvent, ZoomEvent, DragEvent, Cursor } from 'leafer-ui';
+import { App, ResizeEvent, ZoomEvent, DragEvent, PointerEvent, Cursor } from 'leafer-ui';
 import debounce from 'lodash/debounce';
 import { addListener, removeListener } from 'resize-detector';
 import rotatePng from '@assets/rotate.png';
@@ -56,14 +56,15 @@ export default observer(({target}) => {
             stores.editor.setScale(app.tree.scale);
         });
 
+        
         let shapeId = null;
-        app.tree.on(DragEvent.START, (arg) => {
+        const onStart = (arg) => {
             if (!stores.editor.useTool) return;
             const { target } = arg;
             const shape = stores.editor.getShape(target.id);
             if (shape) return;
             shapeId = nanoid();
-            const size = arg.getPageBounds();
+            const size = arg.getPageBounds ? arg.getPageBounds() : arg.getPage();
             const type = stores.editor.useTool;
             const newShape = {
                 id: shapeId,
@@ -73,8 +74,26 @@ export default observer(({target}) => {
                 zIndex: stores.editor.shapes.size + 1,
                 ...size
             };
+            return newShape;
+        }
+        app.tree.on(PointerEvent.DOWN, (arg) => {
+            const type = stores.editor.useTool;
+            if (type !== 'Step') return;
+            const newShape = onStart(arg);
+            if (!newShape) return;
+            newShape.text = stores.editor.nextStep;
+            newShape.editable = true;
+            stores.editor.addShape(newShape);
+            shapeId = null;
+            stores.editor.setUseTool(null);
+        });
+        app.tree.on(DragEvent.START, (arg) => {
+            const type = stores.editor.useTool;
+            if (type === 'Step') return;
+            const newShape = onStart(arg);
+            if (!newShape) return;
             if (['Slash', 'MoveDownLeft', 'Pencil'].includes(type)) {
-                newShape.points = [size.x, size.y];
+                newShape.points = [newShape.x, newShape.y];
             }
             stores.editor.addShape(newShape);
         });
@@ -123,15 +142,6 @@ export default observer(({target}) => {
         }, 10);
 
         addListener(target, onResize);
-    
-        // setTimeout(() => {
-        //     const { width, height } = target.getBoundingClientRect();
-        //     app.tree.zoom('fit', 100);
-        //     if (stores.option.frameConf.width < width && stores.option.frameConf.height < height) {
-        //         app.tree.zoom(1);
-        //     }
-        //     stores.editor.setScale(app.tree.scale);
-        // }, 10);
 
         return (() => {
             removeListener(target, onResize);

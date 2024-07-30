@@ -7,7 +7,7 @@ export const isAppleDevice = () => {
     return /Mac|iPod|iPhone|iPad/.test(PLATFORM);
 };
 
-export const modKey = (isAppleDevice() ? '⌘' : 'Ctrl');
+export const modKey = isAppleDevice() ? '⌘' : 'Ctrl';
 
 export const supportImg = [
     'image/jpeg',
@@ -77,51 +77,68 @@ export const getImage = (src) => {
     });
 };
 
+export const getMargin = (width, height, r = 0.15) => {
+    const min = Math.min(width, height);
+    return Math.round(min * r);
+};
+
 // type: ['top-left', 'top', 'top-right', 'left', 'center', 'right', 'bottom-left', 'bottom', 'bottom-right']
 export const getPosition = (type, xw, xh) => {
-    if (type === 'top-left') return {
-        x: 0,
-        y: 0
-    }
-    if (type === 'top') return {
-        x: xw / 2,
-        y: 0
-    }
-    if (type === 'top-right') return {
-        x: xw,
-        y: 0
-    }
-    if (type === 'left') return {
-        x: 0,
-        y: xh /2
-    }
-    if (type === 'right') return {
-        x: xw,
-        y: xh / 2
-    }
-    if (type === 'bottom-left') return {
-        x: 0,
-        y: xh
-    }
-    if (type === 'bottom') return {
-        x: xw / 2,
-        y: xh
-    }
-    if (type === 'bottom-right') return {
-        x: xw,
-        y: xh
-    }
+    if (type === 'top-left')
+        return {
+            x: 0,
+            y: 0,
+        };
+    if (type === 'top')
+        return {
+            x: xw / 2,
+            y: 0,
+        };
+    if (type === 'top-right')
+        return {
+            x: xw,
+            y: 0,
+        };
+    if (type === 'left')
+        return {
+            x: 0,
+            y: xh / 2,
+        };
+    if (type === 'right')
+        return {
+            x: xw,
+            y: xh / 2,
+        };
+    if (type === 'bottom-left')
+        return {
+            x: 0,
+            y: xh,
+        };
+    if (type === 'bottom')
+        return {
+            x: xw / 2,
+            y: xh,
+        };
+    if (type === 'bottom-right')
+        return {
+            x: xw,
+            y: xh,
+        };
     return { x: xw / 2, y: xh / 2 };
-}
+};
 
 export const calculateRotatedRectDimensions = (width, height, angleDegrees) => {
     const angleRadians = angleDegrees * (Math.PI / 180);
-    const newWidth = Math.abs(width * Math.cos(angleRadians)) + Math.abs(height * Math.sin(angleRadians));
-    const newHeight = Math.abs(width * Math.sin(angleRadians)) + Math.abs(height * Math.cos(angleRadians));
+    const newWidth =
+        Math.abs(width * Math.cos(angleRadians)) +
+        Math.abs(height * Math.sin(angleRadians));
+    const newHeight =
+        Math.abs(width * Math.sin(angleRadians)) +
+        Math.abs(height * Math.cos(angleRadians));
 
     return {
         width: Math.round(newWidth),
-        height: Math.round(newHeight)
+        height: Math.round(newHeight),
     };
 };
 
@@ -145,6 +162,20 @@ export const text2Svg = ({ text, color, angleDegrees }) => {
     const data = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${result.width} ${result.height}" width="${result.width}" height="${result.height}">
                 <foreignObject width="100%" height="100%">
                     ${divHtml}
+                </foreignObject>
+            </svg>`;
+    const svgFile = new Blob([data], { type: 'image/svg+xml;charset=utf-8' });
+    const DOMURL = window.URL || window.webkitURL || window;
+    const url = DOMURL.createObjectURL(svgFile);
+    return url;
+};
+
+export const numSvg = (num) => {
+    const data =  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+                <foreignObject width="100%" height="100%">
+                    <div xmlns="http://www.w3.org/1999/xhtml" style="text-align:center;white-space:nowrap;line-height:32px;">
+                        <span style="color:#ffffff;font-size:18px;">${num}</span>
+                    </div>
                 </foreignObject>
             </svg>`;
     const svgFile = new Blob([data], { type: 'image/svg+xml;charset=utf-8' });

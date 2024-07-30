@@ -1,6 +1,7 @@
 import { useEffect, useMemo } from 'react';
 import { Rect, Ellipse, Line, Text } from 'leafer-ui';
 import { Arrow } from '@leafer-in/arrow';
+import { numSvg } from '@utils/utils';
 
 export default ({ parent, type, id, width, height, x, y, fill, strokeWidth, zIndex, points, editable, text }) => {
     const shape = useMemo(() => {
@@ -53,6 +54,63 @@ export default ({ parent, type, id, width, height, x, y, fill, strokeWidth, zInd
                 strokeWidth
             });
         }
+        if (type === 'Step') {
+            // return new Box({
+            //     ...defaultOption,
+            //     fill: 'red',
+            //     cornerRadius: 32,
+            //     stroke: '#ffffff90',
+            //     strokeWidth: 2,
+            //     shadow: {
+            //         x: 1,
+            //         y: 1,
+            //         blur: 2,
+            //         color: '#00000045',
+            //         box: true
+            //     },
+            //     children: [{
+            //         tag: 'Text',
+            //         text,
+            //         fill: 'white',
+            //         fontSize: 18,
+            //         fontFamily: 'Helvetica,Arial,sans-serif',
+            //         width: 32,
+            //         height: 32,
+            //         resizeFontSize: true,
+            //         fontWeight: 'bold',
+            //         textAlign: 'center',
+            //         verticalAlign: 'middle',
+            //         editable: false
+            //     }]
+            // });
+            return new Ellipse({
+                ...defaultOption,
+                width: 32,
+                height: 32,
+                stroke: '#ffffff90',
+                strokeWidth: 2,
+                lockRatio: true,
+                shadow: {
+                    x: 1,
+                    y: 1,
+                    blur: 2,
+                    color: '#00000045',
+                    box: true
+                },
+                fill: [
+                    {
+                        type: 'solid',
+                        color: fill
+                    },
+                    {
+                        type: 'image',
+                        url: numSvg(text),
+                        format: 'svg',
+                        align: 'center'
+                    }
+                ]
+            })
+        }
         if (type === 'emoji') {
             return new Text({
                 id,
@@ -75,6 +133,8 @@ export default ({ parent, type, id, width, height, x, y, fill, strokeWidth, zInd
     useEffect(() => {
         if (['Slash', 'MoveDownLeft', 'Pencil'].includes(type)) {
             shape.points = points;
+        } else if (type === 'Step') {
+            //
         } else {
             shape.x = x;
             shape.y = y;

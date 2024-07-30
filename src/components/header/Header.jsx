@@ -11,9 +11,9 @@ import EmojiSelect from './EmojiSelect';
 import Logo from './Logo';
 import MediaLogo from './MediaLogo';
 
-const toolList = ['Square', 'SquareFill', 'Circle', 'Slash', 'MoveDownLeft', 'Pencil', 'Smile'];
+const toolList = ['Square', 'SquareFill', 'Circle', 'Slash', 'MoveDownLeft', 'Pencil', 'Step', 'Smile'];
 
-export default observer(() => {
+export default observer(({headLeft, headRight}) => {
     const [isMove, setIsMove] = useState(false);
     // const handleUndo = () => {
     //     console.log(JSON.stringify(stores.editor.app.toJSON()))
@@ -50,7 +50,7 @@ export default observer(() => {
     return (
         <div className='flex items-center justify-center shrink-0 gap-3 bg-white py-2 px-5 border-b border-b-gray-50 shadow-sm relative z-[11] select-none'>
             <div className="flex-1">
-                <Logo />
+                {headLeft ? {headLeft} : <Logo />}
             </div>
             {/* Todo */}
             {/* <div className='flex gap-1 justify-center items-center'>
@@ -73,12 +73,14 @@ export default observer(() => {
             <Divider type='vertical' /> */}
             <div className='flex gap-1 justify-center items-center'>
                 {toolList.map(item => {
-                    if (item === 'Smile') return (<EmojiSelect key={item} disabled={false} toSelect={handleSelectEmoji} />)
+                    if (item === 'Smile') return (<EmojiSelect key={item} disabled={false} toSelect={handleSelectEmoji} />);
                     let icon;
                     if (item.includes('Fill')) {
                         const type = item.replace('Fill', '');
                         const Icons = icons[type];
                         icon = <Icons size={16} fill='currentColor' />;
+                    } else if (item === 'Step') {
+                        icon = <div key={item} className="border text-xs border-black w-4 h-4 rounded-full text-center leading-4">{stores.editor.nextStep}</div>;
                     } else {
                         const Icons = icons[item];
                         icon = <Icons name={item} size={16} />;
@@ -89,7 +91,7 @@ export default observer(() => {
                             type='text'
                             shape='circle'
                             icon={icon}
-                            className={stores.editor.useTool === item && 'text-[#1677ff] bg-sky-100/50 hover:bg-sky-100 hover:text-[#1677ff]'}
+                            className={stores.editor.useTool === item && 'text-[#1677ff] [&_.border]:border-[#1677ff] bg-sky-100/50 hover:bg-sky-100 hover:text-[#1677ff]'}
                             onClick={() => selectTool(item)}
                         />
                     )
@@ -128,7 +130,7 @@ export default observer(() => {
                 />
             </div>
             {/* <Divider type='vertical' /> */}
-            <MediaLogo />
+            {headRight ? {headRight} : <MediaLogo />}
         </div>
     );
 });

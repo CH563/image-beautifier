@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite';
 import Icon from '@components/Icon';
 import { Popover, Button } from 'antd';
 import stores from '@stores';
-import { cn } from '@utils/utils';
+import { cn, getMargin } from '@utils/utils';
 import sizeConfig from '@utils/sizeConfig';
 import CustomSize from './CustomSize';
 
@@ -32,7 +32,7 @@ export default observer(() => {
     const onSet = (value) => {
         hide();
         if (value.type === 'auto' && stores.editor.img.width) {
-            const margin = Math.round(stores.editor.img.width * 0.2);
+            const margin = getMargin(stores.editor.img.width, stores.editor.img.height);
             stores.option.setSize({...value, width: stores.editor.img.width + margin, height: stores.editor.img.height + margin});
             return;
         }

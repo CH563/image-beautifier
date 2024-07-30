@@ -1,4 +1,5 @@
 import { makeAutoObservable, toJS, action } from 'mobx';
+import { maxBy } from 'lodash';
 
 let timer;
 class Editor {
@@ -30,6 +31,13 @@ class Editor {
             this.setInvalid();
         }
         return is;
+    }
+
+    get nextStep() {
+        const steps = this.shapesList.filter(e => e.type === 'Step');
+        const maxItem = maxBy(steps, (item) => Number(item.text));
+        if (maxItem?.text) return Number(maxItem.text) + 1;
+        return 1;
     }
 
     setInvalid() {
@@ -97,7 +105,7 @@ class Editor {
     }
 
     destroy() {
-        this.app?.destroy();
+        this.app?.destroy(true);
         this.app = null;
         this.shapes.clear();
         this.setUseTool(null);

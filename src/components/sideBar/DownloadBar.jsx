@@ -81,6 +81,7 @@ export default observer(() => {
         setLoading(false);
     }
     const confirm = () => {
+        stores.editor.destroy();
         stores.editor.clearImg();
     }
     useKeyboardShortcuts(() => toDownload(), () => toCopy(), [toDownload, toCopy]);

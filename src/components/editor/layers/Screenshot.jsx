@@ -2,7 +2,7 @@ import { useEffect, useMemo } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Image, Box } from 'leafer-ui';
 import stores from '@stores';
-import { computedSize, getPosition } from '@utils/utils';
+import { computedSize, getPosition, getMargin } from '@utils/utils';
 
 export default observer(({ parent }) => {
     const [image, box] = useMemo(() => {
@@ -63,7 +63,7 @@ export default observer(({ parent }) => {
     }, [stores.option.scaleY]);
 
     useEffect(() => {
-        const margin = Math.round(stores.option.frameConf.width * 0.2);
+        const margin = getMargin(stores.option.frameConf.width, stores.option.frameConf.height);
         const { width, height } = computedSize(stores.editor.img.width, stores.editor.img.height, stores.option.frameConf.width - margin, stores.option.frameConf.height - margin);
         image.width = width - stores.option.padding;
         image.height = height - stores.option.padding;
