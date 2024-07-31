@@ -142,6 +142,24 @@ export const calculateRotatedRectDimensions = (width, height, angleDegrees) => {
     };
 };
 
+export function toBase64(blob) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(blob);
+    });
+};
+
+export const svgToDataURL = (svgStr) => {
+    const encoded = encodeURIComponent(svgStr).replace(/'/g, '%27').replace(/"/g, '%22');
+
+    const header = 'data:image/svg+xml,';
+    const dataUrl = header + encoded;
+
+    return dataUrl;
+};
+
 export const text2Svg = ({ text, color, angleDegrees }) => {
     const div = document.createElement('div');
     div.style = `text-align:center;white-space:nowrap;line-height:100px;transform: rotate(${angleDegrees}deg);position: absolute;top:0;left:0;opacity: 0;`;
@@ -164,22 +182,18 @@ export const text2Svg = ({ text, color, angleDegrees }) => {
                     ${divHtml}
                 </foreignObject>
             </svg>`;
-    const svgFile = new Blob([data], { type: 'image/svg+xml;charset=utf-8' });
-    const DOMURL = window.URL || window.webkitURL || window;
-    const url = DOMURL.createObjectURL(svgFile);
+    const url = svgToDataURL(data);
     return url;
 };
 
 export const numSvg = (num) => {
-    const data =  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+    const data = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
                 <foreignObject width="100%" height="100%">
                     <div xmlns="http://www.w3.org/1999/xhtml" style="text-align:center;white-space:nowrap;line-height:32px;">
                         <span style="color:#ffffff;font-size:18px;">${num}</span>
                     </div>
                 </foreignObject>
             </svg>`;
-    const svgFile = new Blob([data], { type: 'image/svg+xml;charset=utf-8' });
-    const DOMURL = window.URL || window.webkitURL || window;
-    const url = DOMURL.createObjectURL(svgFile);
+    const url = svgToDataURL(data);
     return url;
 };
