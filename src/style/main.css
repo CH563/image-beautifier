@@ -1,109 +1,74 @@
-@tailwind base;
+@layer tailwind-base, antd;
+@layer tailwind-base {
+  @tailwind base;
+}
 @tailwind components;
 @tailwind utilities;
 
-:root {
-    --accent: 136, 58, 234;
-    --accent-light: 224, 204, 250;
-    --accent-dark: 49, 10, 101;
-    --accent-gradient: linear-gradient(
-        45deg,
-        rgb(var(--accent)),
-        rgb(var(--accent-light)) 30%,
-        white 60%
-    );
-    --c-bg: #fbfbfb;
-    --c-wg: #fff;
-    --c-wb: #c2c2c2;
-    --c-bg-op: #fbfbfb00;
-    --c-fg: #444444;
-    --c-scroll: #d9d9d9;
-    --c-scroll-hover: #bbbbbb;
-    --ant-color-primary: #1677ff;
-    scrollbar-color: var(--c-scrollbar) var(--c-bg);
-    --primary-glow: conic-gradient(
-        from 180deg at 50% 50%,
-        #16abff33 0deg,
-        #0885ff33 55deg,
-        #54d6ff33 120deg,
-        #0071ff33 160deg,
-        transparent 360deg
-    );
-}
-
 @layer base {
-    ::-webkit-scrollbar {
-        @apply w-1.5;
-        @apply h-1.5;
+    #shoteasy-container,.shoteasy-components {
+        --c-wb: #c2c2c2;
+        --c-wc: #fcfcfc;
+        --c-bg: #fbfbfb;
+        --c-br: #cecece;
+        --c-se: #1900ff94;
+        --c-scroll: #d9d9d9;
+        --c-scroll-hover: #bbbbbb;
     }
-    ::-webkit-scrollbar-thumb {
-        @apply bg-[var(--c-scroll)];
-        @apply rounded-md;
+    #shoteasy-container[data-mode="dark"],.shoteasy-components.dark-mode,.shoteasy-components [data-mode="dark"] {
+        --c-wb: #444;
+        --c-wc: #222;
+        --c-bg: #2b2b2b;
+        --c-br: #5e5e5e;
+        --c-se: #5947fc;
+        --c-scroll: #464646;
+        --c-scroll-hover: #595858;
     }
-    ::-webkit-scrollbar-thumb:hover {
-        @apply bg-[var(--c-scroll-hover)];
-    }
-    ::-webkit-scrollbar-track {
-        @apply bg-[var(--c-bg)];
+    #shoteasy-container,.shoteasy-components {
+        @apply [&_::-webkit-scrollbar]:w-1.5 [&_::-webkit-scrollbar]:h-1.5;
+        @apply [&_::-webkit-scrollbar-thumb]:bg-[var(--c-scroll)] [&_::-webkit-scrollbar-thumb]:rounded-md;
+        @apply hover:[&_::-webkit-scrollbar-thumb]:bg-[var(--c-scroll-hover)];
+        @apply [&_::-webkit-scrollbar-track]:bg-[var(--c-bg)];
     }
 }
 
 @layer components {
     .polka {
-        background-image: radial-gradient(var(--c-wb) 0.7px, #fcfcfc 1px);
+        background-image: radial-gradient(var(--c-wb) 0.7px, var(--c-wc) 1px);
         background-size: 14px 14px;
     }
     .ant-radio-wrapper-checked .h-8 {
-        box-shadow: 0 0 0 2px #fff, 0 0 0 4px rgba(25, 0, 255, 0.582);
+        box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--c-se);
     }
     .position-block {
-        @apply relative;
-        @apply after:block;
-        @apply after:transition-all;
-        @apply after:w-8;
-        @apply after:h-8;
-        @apply after:rounded-md;
-        @apply after:border;
-        @apply after:border-blue-300;
-        @apply after:bg-blue-100;
-        @apply after:absolute;
-        @apply after:z-10;
+        @apply relative after:block after:transition-all after:w-8 after:h-8 after:rounded-md after:border after:border-blue-300 after:bg-blue-100 after:absolute after:z-10;
     }
     .position-block.top-left {
-        @apply after:top-0;
-        @apply after:left-0;
+        @apply after:top-0 after:left-0;
     }
     .position-block.top {
-        @apply after:top-0;
-        @apply after:left-8;
+        @apply after:top-0 after:left-8;
     }
     .position-block.top-right {
-        @apply after:top-0;
-        @apply after:right-0;
+        @apply after:top-0 after:right-0;
     }
     .position-block.right {
-        @apply after:top-8;
-        @apply after:right-0;
+        @apply after:top-8 after:right-0;
     }
     .position-block.bottom-right {
-        @apply after:bottom-0;
-        @apply after:right-0;
+        @apply after:bottom-0 after:right-0;
     }
     .position-block.bottom {
-        @apply after:bottom-0;
-        @apply after:left-8;
+        @apply after:bottom-0 after:left-8;
     }
     .position-block.bottom-left {
-        @apply after:bottom-0;
-        @apply after:left-0;
+        @apply after:bottom-0 after:left-0;
     }
     .position-block.left {
-        @apply after:top-8;
-        @apply after:left-0;
+        @apply after:top-8 after:left-0;
     }
     .position-block.center {
-        @apply after:top-8;
-        @apply after:left-8;
+        @apply after:top-8 after:left-8;
     }
     .bg-transparent {
         background-image: 

@@ -1,4 +1,4 @@
-import { makeAutoObservable, toJS, action } from 'mobx';
+import { makeAutoObservable, toJS, action, runInAction } from 'mobx';
 import { maxBy } from 'lodash';
 
 let timer;
@@ -12,6 +12,7 @@ class Editor {
     strokeWidth = 4;
     shapes = new Map();
     message = null;
+    theme = 'light';
     constructor () {
         makeAutoObservable(this)
     }
@@ -38,6 +39,21 @@ class Editor {
         const maxItem = maxBy(steps, (item) => Number(item.text));
         if (maxItem?.text) return Number(maxItem.text) + 1;
         return 1;
+    }
+
+    get isDark() {
+        return this.theme === 'dark';
+    }
+
+    setTheme(value) {
+        if (value === this.theme) return;
+        runInAction(() => {
+            if (value) {
+                this.theme = value;
+            } else {
+                this.theme = this.isDark ? 'light' : 'dark';
+            }
+        });
     }
 
     setInvalid() {

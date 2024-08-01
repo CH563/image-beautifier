@@ -47,8 +47,12 @@ export default observer(({headLeft, headRight}) => {
         setIsMove(is);
         stores.editor.app.config.move.drag = is;
     }
+    const handleSetTheme = () => {
+        stores.editor.setTheme()
+        localStorage.setItem('SHOTEASY_BEAUTIFIER_THEME', stores.editor.theme);
+    }
     return (
-        <div className='flex items-center justify-center shrink-0 gap-3 bg-white py-2 px-5 border-b border-b-gray-50 shadow-sm relative z-[11] select-none'>
+        <div className='flex items-center justify-center shrink-0 gap-3 bg-white dark:bg-black py-2 px-5 border-b border-b-gray-50 dark:border-b-gray-700 shadow-sm relative z-[11] select-none'>
             <div className="flex-1">
                 {headLeft ? {headLeft} : <Logo />}
             </div>
@@ -73,14 +77,14 @@ export default observer(({headLeft, headRight}) => {
             <Divider type='vertical' /> */}
             <div className='flex gap-1 justify-center items-center'>
                 {toolList.map(item => {
-                    if (item === 'Smile') return (<EmojiSelect key={item} disabled={false} toSelect={handleSelectEmoji} />);
+                    if (item === 'Smile') return (<EmojiSelect key={item} disabled={false} theme={stores.editor.isDark?'dark':'light'} toSelect={handleSelectEmoji} />);
                     let icon;
                     if (item.includes('Fill')) {
                         const type = item.replace('Fill', '');
                         const Icons = icons[type];
                         icon = <Icons size={16} fill='currentColor' />;
                     } else if (item === 'Step') {
-                        icon = <div key={item} className="border text-xs border-black w-4 h-4 rounded-full text-center leading-4">{stores.editor.nextStep}</div>;
+                        icon = <div key={item} className="border text-xs border-black dark:border-white w-4 h-4 rounded-full text-center leading-4">{stores.editor.nextStep}</div>;
                     } else {
                         const Icons = icons[item];
                         icon = <Icons name={item} size={16} />;
@@ -130,7 +134,16 @@ export default observer(({headLeft, headRight}) => {
                 />
             </div>
             {/* <Divider type='vertical' /> */}
-            {headRight ? {headRight} : <MediaLogo />}
+            {headRight ? { headRight } :
+                <MediaLogo>
+                    <Button
+                        type="text"
+                        shape='circle'
+                        icon={stores.editor.isDark ? <Icon.Sun size={16} /> : <Icon.Moon size={16} />}
+                        onClick={handleSetTheme}
+                    ></Button>
+                </MediaLogo>
+            }
         </div>
     );
 });

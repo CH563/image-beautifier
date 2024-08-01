@@ -1,7 +1,7 @@
 export default () => {
     return (
         <h1>
-            <a href="https://shoteasy.fun" target="_blank" aria-label="ShotEasy" className="flex gap-1 text-gray-700 items-center text-xs font-semibold">
+            <a href="https://shoteasy.fun" target="_blank" aria-label="ShotEasy" className="flex gap-1 text-gray-700 dark:text-gray-300 items-center text-xs font-semibold">
                 <svg width="20" height="20" viewBox="0 0 510 510" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <g filter="url(#filter0_i_40_60)">
                         <path d="M60.1774 83.172C64.1232 61.4358 84.9426 47.0139 106.679 50.9598L271.777 80.9308C293.513 84.8767 307.935 105.696 303.989 127.432L247.462 438.817C243.516 460.553 222.696 474.975 200.96 471.029L35.8623 441.058C14.1261 437.112 -0.295702 416.293 3.65017 394.557L60.1774 83.172Z" fill="#812BED" />

@@ -113,7 +113,7 @@ export default observer(() => {
                 theme={{
                     components: {
                         Button: {
-                            colorPrimary: '#000',
+                            colorPrimary: stores.editor.isDark ? '#2b4acb':'#000',
                             algorithm: true, // 启用算法
                         },
                     },

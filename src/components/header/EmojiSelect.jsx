@@ -4,7 +4,7 @@ import Icon from '@components/Icon';
 import data from '@emoji-mart/data'
 import Picker from '@emoji-mart/react'
 
-export default ({disabled = false, toSelect, locale='en'}) => {
+export default ({disabled = false, toSelect, locale='en', theme='auto'}) => {
     const [open, setOpen] = useState(false);
     const hide = () => {
         setOpen(false);
@@ -18,11 +18,11 @@ export default ({disabled = false, toSelect, locale='en'}) => {
     }
     return (
         <Popover
-        content={<Picker data={data} locale={locale} onEmojiSelect={onEmojiSelect} previewPosition='none' />}
-        title=""
-        trigger="click"
-        open={open}
-        onOpenChange={handleOpenChange}
+            content={<Picker data={data} locale={locale} onEmojiSelect={onEmojiSelect} previewPosition='none' theme={theme} />}
+            title=""
+            trigger="click"
+            open={open}
+            onOpenChange={handleOpenChange}
         >
             <Button
                 type="text"

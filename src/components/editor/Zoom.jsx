@@ -39,14 +39,14 @@ export default observer(() => {
     }
     return (
         <div className="absolute z-10 bottom-4 gap-2 right-4 flex items-center ">
-            <div className="flex bg-white overflow-hidden rounded-full shadow-md">
+            <div className="flex bg-white dark:bg-black overflow-hidden rounded-full shadow-md">
                 <Button type="text" icon={<Icon.ZoomIn size={16} />} onClick={() => handleZoom('in')} />
                 <Dropdown menu={{ items, onClick: handleMenuClick }} placement="top">
                     <Button type="text">{stores.editor.scale}%</Button>
                 </Dropdown>
                 <Button type="text" icon={<Icon.ZoomOut size={16} />} onClick={() => handleZoom('out')} />
             </div>
-            <div className="rounded-full bg-white shadow-md overflow-hidden">
+            <div className="rounded-full bg-white dark:bg-black shadow-md overflow-hidden">
                 <Button type="text" icon={<Icon.Maximize size={16} />} onClick={() => handleMenuClick({key: 4})} />
             </div>
         </div>

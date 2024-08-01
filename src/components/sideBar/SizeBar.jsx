@@ -50,7 +50,7 @@ export default observer(() => {
     const isShowSize = stores.editor.img?.src || stores.option.size.type !== 'auto';
     const title = <CustomSize type={stores.option.size.type} frameWidth={stores.option.frameConf.width} frameHeight={stores.option.frameConf.height} onSet={onSet} />;
     const content = (
-        <div className="border-t border-gray-200 py-2 divide-y">
+        <div className="border-t border-gray-200 dark:border-gray-800 py-2 divide-y dark:divide-gray-700" data-mode={stores.editor.isDark?'dark':'light'}>
             {sizeConfig.map(item => (
                 <div key={item.key}>
                     {item.key !== 'default' && <div className="font-semibold pt-2">{item.title}</div>}
@@ -64,7 +64,7 @@ export default observer(() => {
                                 onClick={() => toSelected(item.key, item.title, child)}>
                                 <div className="py-2 px-3 w-full">
                                     <div
-                                        className='border border-black/50 bg-black/10 w-full flex items-center justify-center rounded-md opacity-75'
+                                        className='border border-black/50 bg-black/10 dark:bg-white/20 dark:border-white/40 w-full flex items-center justify-center rounded-md opacity-75'
                                         style={{ aspectRatio: child.w / child.h }}
                                     ><span>{child.w} : {child.h}</span></div>
                                 </div>
@@ -85,16 +85,16 @@ export default observer(() => {
             arrow={false}
             placement="bottomRight"
             open={open}
-            overlayClassName="[&_.ant-popover-inner]:h-full [&_.ant-popover-inner]:overflow-x-hidden [&_.ant-popover-inner]:overflow-y-auto [&_.ant-popover-content]:h-full"
+            overlayClassName={cn("shoteasy-components [&_.ant-popover-inner]:h-full [&_.ant-popover-inner]:overflow-x-hidden [&_.ant-popover-inner]:overflow-y-auto [&_.ant-popover-content]:h-full", stores.editor.isDark && 'dark-mode')}
             overlayStyle={{
                 width: '400px',
                 height: `${height}px`
             }}
             onOpenChange={handleOpenChange}
         >
-            <div className={cn('px-3 py-1.5 border shrink-0 border-gray-200 gap-3 shadow-sm overflow-hidden max-h-12 rounded-md hover:border-blue-500 [&_svg]:hover:text-blue-500 cursor-pointer flex items-center', open && 'shadow-md')} ref={box}>
+            <div className={cn('px-3 py-1.5 border shrink-0 border-gray-200 dark:border-gray-700 gap-3 shadow-sm overflow-hidden max-h-12 rounded-md hover:border-blue-500 [&_svg]:hover:text-blue-500 cursor-pointer flex items-center', open && 'shadow-md')} ref={box}>
                 <div
-                    className='border border-black/50 bg-black/10 w-4 rounded-sm'
+                    className='border border-black/50 bg-black/10 dark:bg-white/20 dark:border-white/40 w-4 rounded-sm'
                     style={{ aspectRatio: stores.option.frameConf.width / stores.option.frameConf.height }}
                 />
                 <div className='text-xs'>

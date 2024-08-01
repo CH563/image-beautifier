@@ -18,8 +18,13 @@
     "preview": "vite preview",
     "release": "npm publish"
   },
-  "files": ["lib", "license", "README.md"],
+  "files": [
+    "lib",
+    "license",
+    "README.md"
+  ],
   "dependencies": {
+    "@ant-design/cssinjs": "^1.21.0",
     "@ctrl/tinycolor": "^4.1.0",
     "@emoji-mart/data": "^1.2.1",
     "@emoji-mart/react": "^1.1.1",

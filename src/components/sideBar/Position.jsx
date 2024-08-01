@@ -21,7 +21,7 @@ export default observer(() => {
     const content = (
         <div className={cn("flex flex-wrap w-24 position-block", stores.option.align)}>
             {cols.map(item => (
-                <div key={item} className="w-8 h-8 border border-gray-200 rounded-sm hover:bg-gray-100 cursor-pointer" onClick={() => handleSelect(item)}></div>
+                <div key={item} className="w-8 h-8 border border-[var(--c-br)] rounded-sm hover:bg-[var(--c-wb)] cursor-pointer" onClick={() => handleSelect(item)}></div>
             ))}
         </div>
     )
@@ -31,6 +31,7 @@ export default observer(() => {
             trigger='click'
             arrow={false}
             placement="bottomRight"
+            overlayClassName={cn("shoteasy-components", stores.editor.isDark && 'dark-mode')}
             open={open}
             onOpenChange={handleOpenChange}
         >

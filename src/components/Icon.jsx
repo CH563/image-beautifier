@@ -36,7 +36,9 @@ import {
     Settings2,
     ChevronLeft,
     Pipette,
-    Trash2
+    Trash2,
+    Sun,
+    Moon
 } from 'lucide-react';
 
 export default {
@@ -77,5 +79,7 @@ export default {
     Settings2,
     ChevronLeft,
     Pipette,
-    Trash2
+    Trash2,
+    Sun,
+    Moon
 };
