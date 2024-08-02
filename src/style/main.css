@@ -38,7 +38,7 @@
         background-size: 14px 14px;
     }
     .ant-radio-wrapper-checked .h-8 {
-        box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--c-se);
+        box-shadow: 0 0 0 1px #fff, 0 0 0 3px var(--c-se);
     }
     .position-block {
         @apply relative after:block after:transition-all after:w-8 after:h-8 after:rounded-md after:border after:border-blue-300 after:bg-blue-100 after:absolute after:z-10;

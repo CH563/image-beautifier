@@ -53,7 +53,7 @@ export const computedSize = (w, h, maxWidth = 950, maxHeight = 450) => {
         width *= maxHeight / height;
         height = maxHeight;
     }
-    return { width, height };
+    return { width: Math.round(width), height: Math.round(height) };
 };
 
 export const getImage = (src) => {

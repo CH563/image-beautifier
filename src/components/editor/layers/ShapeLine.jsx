@@ -88,7 +88,7 @@ export default ({ parent, type, id, width, height, x, y, fill, strokeWidth, zInd
                 width: 32,
                 height: 32,
                 stroke: '#ffffff90',
-                strokeWidth: 2,
+                strokeWidth: 1,
                 lockRatio: true,
                 shadow: {
                     x: 1,

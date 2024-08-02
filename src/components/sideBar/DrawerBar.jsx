@@ -38,7 +38,8 @@ export default observer(({ showMore, onChange }) => {
                         type="text"
                         size="small"
                         className="text-xs flex items-center opacity-80 m-0"
-                        icon={<Icon.ChevronLeft size={16} />}
+                        icon={<Icon.ChevronRight size={16} />}
+                        iconPosition="end"
                         onClick={() => onChange(false)}
                     >Back</Button>
                 </div>

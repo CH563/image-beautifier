@@ -56,6 +56,10 @@ class Option {
         this.shadow = value;
     }
 
+    setFrame(value) {
+        this.frame = value;
+    }
+
     setFrameSize(width, height) {
         if (!width || !height) return;
         this.frameConf.width = width;

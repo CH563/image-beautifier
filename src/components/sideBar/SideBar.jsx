@@ -12,6 +12,7 @@ import Position from './Position';
 import Watermark from './Watermark';
 import DownloadBar from './DownloadBar';
 import DrawerBar from './DrawerBar';
+import FrameBar from './FrameBar';
 
 
 export default observer(() => {
@@ -94,6 +95,7 @@ export default observer(() => {
                         value={typeof stores.option.shadow === 'number' ? stores.option.shadow : 0}
                     />
                 </div>
+                <FrameBar />
                 <div className="[&_label]:font-semibold [&_label]:text-sm">
                     <div className="flex justify-between items-center">
                         <label>Background</label>
@@ -106,7 +108,8 @@ export default observer(() => {
                     </div>
                     <div className="py-3">
                         <Radio.Group
-                            onChange={onBgChange} value={stores.option.background}
+                            onChange={onBgChange}
+                            value={stores.option.background}
                             rootClassName="grid grid-cols-7 [&_span]:ps-0"
                         >
                             <Radio className="[&_.ant-radio]:hidden [&_span]:p-0 mr-0" value='default_1'>
