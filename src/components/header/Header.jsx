@@ -95,7 +95,7 @@ export default observer(({headLeft, headRight}) => {
                             type='text'
                             shape='circle'
                             icon={icon}
-                            className={stores.editor.useTool === item && 'text-[#1677ff] [&_.border]:border-[#1677ff] bg-sky-100/50 hover:bg-sky-100 hover:text-[#1677ff]'}
+                            className={stores.editor.useTool === item && 'text-[#1a79ff] [&_.border]:border-[#1a79ff] bg-sky-100/50 hover:bg-sky-100 hover:text-[#1a79ff] [&_.border]:hover:text-[#1a79ff]'}
                             onClick={() => selectTool(item)}
                         />
                     )

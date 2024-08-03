@@ -55,40 +55,13 @@ export default ({ parent, type, id, width, height, x, y, fill, strokeWidth, zInd
             });
         }
         if (type === 'Step') {
-            // return new Box({
-            //     ...defaultOption,
-            //     fill: 'red',
-            //     cornerRadius: 32,
-            //     stroke: '#ffffff90',
-            //     strokeWidth: 2,
-            //     shadow: {
-            //         x: 1,
-            //         y: 1,
-            //         blur: 2,
-            //         color: '#00000045',
-            //         box: true
-            //     },
-            //     children: [{
-            //         tag: 'Text',
-            //         text,
-            //         fill: 'white',
-            //         fontSize: 18,
-            //         fontFamily: 'Helvetica,Arial,sans-serif',
-            //         width: 32,
-            //         height: 32,
-            //         resizeFontSize: true,
-            //         fontWeight: 'bold',
-            //         textAlign: 'center',
-            //         verticalAlign: 'middle',
-            //         editable: false
-            //     }]
-            // });
             return new Ellipse({
                 ...defaultOption,
                 width: 32,
                 height: 32,
                 stroke: '#ffffff90',
-                strokeWidth: 1,
+                strokeWidth: 2,
+                strokeAlign: 'outside',
                 lockRatio: true,
                 shadow: {
                     x: 1,
