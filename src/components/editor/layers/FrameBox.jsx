@@ -1,6 +1,5 @@
 import { Children, cloneElement, useEffect, useMemo } from 'react';
-import { Frame, Image } from 'leafer-ui';
-import blurSvg from '@assets/blur.svg';
+import { Frame } from 'leafer-ui';
 
 const childrenInjectProps = (params, children) => {
     if (children instanceof Array) {

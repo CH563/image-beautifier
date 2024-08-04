@@ -1,23 +1,32 @@
 import { useEffect, useMemo, useRef } from 'react';
 import { observer } from 'mobx-react-lite';
-import { Image, Box, Rect } from 'leafer-ui';
+import { Box, Rect } from 'leafer-ui';
 import stores from '@stores';
 import { computedSize, getPosition, getMargin } from '@utils/utils';
+import macosIcon from '@utils/macosIcon';
 
 export default observer(({ parent }) => {
     const bar = useRef(null);
-    const [image, box] = useMemo(() => {
-        const image = new Image({
-            url: stores.editor.img.src,
-            origin: 'center'
+    const [image, box, container] = useMemo(() => {
+        const image = new Rect({
+            origin: 'center',
+            fill: {
+                type: 'image',
+                url: stores.editor.img.src
+            }
         });
         const box = new Box({
             overflow: 'hide',
-            scale: 1,
-            strokeAlign: 'outside',
             children: [image]
         });
-        return [image, box];
+        const container = new Box({
+            overflow: 'hide',
+            strokeAlign: 'outside',
+            scale: 1,
+            fill: '#ffffff00',
+            children: [box]
+        });
+        return [image, box, container];
     }, [parent]);
 
     useEffect(() => {
@@ -29,16 +38,24 @@ export default observer(({ parent }) => {
     }, [stores.option.paddingBg, stores.option.padding]);
 
     useEffect(() => {
-        box.cornerRadius = stores.option.round;
-        image.cornerRadius = stores.option.round;
+        const { round } = stores.option;
+        container.cornerRadius = round;
+        if (bar.current) {
+            bar.current.cornerRadius = [round, round, 0, 0];
+            box.cornerRadius = [0, 0, round, round];
+            image.cornerRadius = [0, 0, round, round];
+        } else {
+            box.cornerRadius = round;
+            image.cornerRadius = round;
+        }
     }, [stores.option.round]);
 
     useEffect(() => {
         const { shadow } = stores.option;
         if (shadow === 0) {
-            box.shadow = null;
+            container.shadow = null;
         } else {
-            box.shadow = {
+            container.shadow = {
                 x: shadow * 4,
                 y: shadow * 4,
                 blur: shadow * 3,
@@ -49,7 +66,7 @@ export default observer(({ parent }) => {
     }, [stores.option.shadow]);
 
     useEffect(() => {
-        box.scale = stores.option.scale;
+        container.scale = stores.option.scale;
     }, [stores.option.scale]);
 
     useEffect(() => {
@@ -64,44 +81,74 @@ export default observer(({ parent }) => {
         image.scaleY = stores.option.scaleY ? -1 : 1;
     }, [stores.option.scaleY]);
 
+
     useEffect(() => {
-        switch (stores.option.frame) {
+        const { align, round, frame, frameConf } = stores.option;
+        const margin = getMargin(frameConf.width, frameConf.height);
+        const { width, height } = computedSize(stores.editor.img.width, stores.editor.img.height, frameConf.width - margin, frameConf.height - margin);
+        let totalHeight = height;
+        switch (frame) {
             case 'light':
-                box.strokeWidth = 8;
-                box.stroke = '#ffffff80';
+                container.strokeWidth = 8;
+                container.stroke = '#ffffff80';
                 break;
             case 'dark':
-                box.strokeWidth = 8;
-                box.stroke = '#00000050';
+                container.strokeWidth = 8;
+                container.stroke = '#00000050';
+                break;
+            case 'macosBarLight':
+            case 'macosBarDark':
+                totalHeight += 32;
+                bar.current = new Rect({
+                    x: 0,
+                    y: 0,
+                    height: 32,
+                    width: width,
+                    cornerRadius: [round, round, 0, 0],
+                    draggable: true,
+                    fill: [
+                        { type: 'solid', color: frame.includes('Dark')? '#3a3a3b' : '#ffffff' },
+                        {type: 'image', url: macosIcon, format: 'svg', mode: 'clip', offset: {x: 10, y: 0}}
+                    ]
+                });
+                container.addAfter(bar.current, box);
+                box.cornerRadius = [0, 0, round, round]
+                image.cornerRadius = [0, 0, round, round]
                 break;
             default:
-                box.strokeWidth = null;
-                box.stroke = null;
+                container.strokeWidth = null;
+                container.stroke = null;
         };
-        const margin = getMargin(stores.option.frameConf.width, stores.option.frameConf.height);
-        const { width, height } = computedSize(stores.editor.img.width, stores.editor.img.height, stores.option.frameConf.width - margin, stores.option.frameConf.height - margin);
-        image.width = width - stores.option.padding + 2; // 解决有缝隙的问题
-        image.height = height - stores.option.padding + 2;
+        const { x, y } = getPosition(align, frameConf.width - width, frameConf.height - totalHeight);
+        container.width = width;
+        container.height = totalHeight;
+        container.origin = align;
+        container.x = x;
+        container.y = y;
         box.width = width;
         box.height = height;
-        box.origin = stores.option.align;
-        const { x, y } = getPosition(stores.option.align, stores.option.frameConf.width - width, stores.option.frameConf.height - height);
-        box.x = x;
-        box.y = y;
-        image.x = (stores.option.padding > 0 ? stores.option.padding / 2 : 0) - 1;
-        image.y = (stores.option.padding > 0 ? stores.option.padding / 2 : 0) - 1;
+        box.x = 0;
+        box.y = totalHeight - height;
+        const imageWidth = width - stores.option.padding;
+        const imageheight = Math.round(imageWidth * height / width);
+        image.width = imageWidth + 2; // 解决有缝隙的问题
+        image.height = imageheight + 2;
+        image.x = stores.option.padding / 2 - 1;
+        image.y = (height - imageheight) / 2 - 1;
         return (() => {
-            box.strokeWidth = null;
-            box.stroke = null;
+            container.strokeWidth = null;
+            container.stroke = null;
             bar.current?.remove();
             bar.current = null;
+            box.cornerRadius = stores.option.round;
+            image.cornerRadius = stores.option.round;
         });
     }, [stores.option.frameConf.width, stores.option.frameConf.height, stores.option.padding, stores.option.align, stores.option.frame]);
 
     useEffect(() => {
-        parent.add(box);
+        parent.add(container);
         return (() => {
-            box.remove();
+            container.remove();
         })
     }, [parent]);
     return null;

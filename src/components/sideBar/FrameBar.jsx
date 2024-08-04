@@ -42,7 +42,7 @@ export default observer(() => {
                             <div className="bg-slate-300/40 border-2 border-black/40 h-7 w-[85%] rounded-md shadow-md -mt-1 -ml-1"></div>
                         </div>
                     </Radio>
-                    <Radio className="[&_.ant-radio]:hidden [&_span]:mr-0 [&_span]:block [&_span]:w-full" value='macosBarLight' disabled>
+                    <Radio className="[&_.ant-radio]:hidden [&_span]:mr-0 [&_span]:block [&_span]:w-full" value='macosBarLight'>
                         <div className="bg-gray-300/30 rounded-md h-8 overflow-hidden">
                             <div className="bg-slate-300/40 h-7 w-[85%] rounded-sm shadow-md mt-2 ml-3 overflow-hidden">
                                 <div
@@ -53,7 +53,7 @@ export default observer(() => {
                             </div>
                         </div>
                     </Radio>
-                    <Radio className="[&_.ant-radio]:hidden [&_span]:mr-0 [&_span]:block [&_span]:w-full" value='macosBarDark' disabled>
+                    <Radio className="[&_.ant-radio]:hidden [&_span]:mr-0 [&_span]:block [&_span]:w-full" value='macosBarDark'>
                         <div className="bg-gray-300/30 rounded-md h-8 overflow-hidden">
                             <div className="bg-slate-300/40 h-7 w-[85%] rounded-sm shadow-md mt-2 ml-3 overflow-hidden">
                                 <div
