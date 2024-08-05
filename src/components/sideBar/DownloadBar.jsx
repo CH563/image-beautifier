@@ -167,6 +167,7 @@ export default observer(() => {
                     <Popconfirm
                         title="Delete the screenshot"
                         description="Are you sure to delete this screenshot?"
+                        placement="topRight"
                         onConfirm={confirm}
                         okText="Yes"
                         cancelText="No"
