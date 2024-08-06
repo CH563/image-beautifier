@@ -4,6 +4,7 @@ import { Box, Rect } from 'leafer-ui';
 import stores from '@stores';
 import { computedSize, getPosition, getMargin } from '@utils/utils';
 import macosIcon from '@utils/macosIcon';
+import { windowDark, windowLight } from '@utils/windowsIcon';
 
 export default observer(({ parent }) => {
     const bar = useRef(null);
@@ -40,12 +41,7 @@ export default observer(({ parent }) => {
     useEffect(() => {
         const { round } = stores.option;
         container.cornerRadius = round;
-        if (bar.current) {
-            bar.current.cornerRadius = [round, round, 0, 0];
-            box.cornerRadius = [0, 0, round, round];
-            image.cornerRadius = [0, 0, round, round];
-        } else {
-            box.cornerRadius = round;
+        if (!bar.current) {
             image.cornerRadius = round;
         }
     }, [stores.option.round]);
@@ -83,7 +79,7 @@ export default observer(({ parent }) => {
 
 
     useEffect(() => {
-        const { align, round, frame, frameConf } = stores.option;
+        const { align, frame, frameConf } = stores.option;
         const margin = getMargin(frameConf.width, frameConf.height);
         const { width, height } = computedSize(stores.editor.img.width, stores.editor.img.height, frameConf.width - margin, frameConf.height - margin);
         let totalHeight = height;
@@ -98,22 +94,27 @@ export default observer(({ parent }) => {
                 break;
             case 'macosBarLight':
             case 'macosBarDark':
+            case 'windowsBarLight':
+            case 'windowsBarDark':
                 totalHeight += 32;
+                const barUrl = {
+                    mac: { type: 'image', url: macosIcon, format: 'svg', mode: 'clip', offset: { x: 10, y: 0 } },
+                    windowsBarLight: { type: 'image', url: windowDark, format: 'svg', mode: 'clip', offset: { x: width - 105, y: 0 } },
+                    windowsBarDark: { type: 'image', url: windowLight, format: 'svg', mode: 'clip', offset: { x: width - 105, y: 0 } },
+                }
                 bar.current = new Rect({
                     x: 0,
                     y: 0,
                     height: 32,
                     width: width,
-                    cornerRadius: [round, round, 0, 0],
-                    draggable: true,
                     fill: [
                         { type: 'solid', color: frame.includes('Dark')? '#3a3a3b' : '#ffffff' },
-                        {type: 'image', url: macosIcon, format: 'svg', mode: 'clip', offset: {x: 10, y: 0}}
+                        barUrl[frame] || barUrl.mac
                     ]
                 });
                 container.addAfter(bar.current, box);
-                box.cornerRadius = [0, 0, round, round]
-                image.cornerRadius = [0, 0, round, round]
+                box.cornerRadius = null;
+                image.cornerRadius = null;
                 break;
             default:
                 container.strokeWidth = null;

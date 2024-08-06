@@ -54,7 +54,7 @@ export default observer(({headLeft, headRight}) => {
     return (
         <div className='flex items-center justify-center shrink-0 gap-3 bg-white dark:bg-black py-2 px-5 border-b border-b-gray-50 dark:border-b-gray-700 shadow-sm relative z-[11] select-none'>
             <div className="flex-1">
-                {headLeft ? {headLeft} : <Logo />}
+                {headLeft ? headLeft : <Logo />}
             </div>
             {/* Todo */}
             {/* <div className='flex gap-1 justify-center items-center'>
@@ -134,7 +134,7 @@ export default observer(({headLeft, headRight}) => {
                 />
             </div>
             {/* <Divider type='vertical' /> */}
-            {headRight ? { headRight } :
+            {headRight ? headRight :
                 <MediaLogo>
                     <Button
                         type="text"

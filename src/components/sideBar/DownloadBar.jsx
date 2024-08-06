@@ -83,6 +83,7 @@ export default observer(() => {
     const confirm = () => {
         stores.editor.destroy();
         stores.editor.clearImg();
+        stores.editor.clearFun && stores.editor.clearFun();
     }
     useKeyboardShortcuts(() => toDownload(), () => toCopy(), [toDownload, toCopy]);
     const content = (<div>

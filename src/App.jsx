@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useEffect } from 'react';
 import { message } from 'antd';
 import { observer } from 'mobx-react-lite';
 import Header from '@components/header/Header';
@@ -12,16 +12,19 @@ import useSetImg from '@hooks/useSetImg';
 import { cn } from '@utils/utils';
 import '@style/main.css';
 
-export default observer(({ defaultImg, headLeft, headRight, isDark, boxClassName = '' }) => {
+export default observer(({ defaultImg, headLeft, headRight, isDark, boxClassName = '', onClear }) => {
   const getFile = useSetImg(stores);
   const workplace = stores.editor.img?.src ? <Editor /> : <Init />
   const [messageApi, contextHolder] = message.useMessage();
   stores.editor.setMessage(messageApi);
+  stores.editor.setClearFun(onClear);
   useMemo(() => {
     const mode = isDark || localStorage.getItem('SHOTEASY_BEAUTIFIER_THEME') === 'dark' ? 'dark' : 'light';
     stores.editor.setTheme(mode);
   }, [isDark]);
-  if (defaultImg) getFile(defaultImg, 'dataURL');
+  useEffect(() => {
+    if (defaultImg) getFile(defaultImg, 'dataURL');
+  }, [defaultImg]);
   return (
     <StyleProvider>
       <ConfigProvider

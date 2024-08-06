@@ -13,6 +13,7 @@ class Editor {
     shapes = new Map();
     message = null;
     theme = 'light';
+    clearFun = null;
     constructor () {
         makeAutoObservable(this)
     }
@@ -114,6 +115,10 @@ class Editor {
 
     setStrokeWidth(value) {
         this.strokeWidth = value;
+    }
+
+    setClearFun(value) {
+        this.clearFun = value;
     }
 
     clearImg() {
