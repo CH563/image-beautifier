@@ -5,6 +5,7 @@ import stores from '@stores';
 import { computedSize, getPosition, getMargin } from '@utils/utils';
 import macosIcon from '@utils/macosIcon';
 import { windowDark, windowLight } from '@utils/windowsIcon';
+import macbookpro16 from '@assets/macbook-pro-16.png';
 
 export default observer(({ parent }) => {
     const bar = useRef(null);
@@ -13,7 +14,9 @@ export default observer(({ parent }) => {
             origin: 'center',
             fill: {
                 type: 'image',
-                url: stores.editor.img.src
+                url: stores.editor.img.src,
+                align: 'top',
+                mode: 'cover'
             }
         });
         const box = new Box({
@@ -31,8 +34,8 @@ export default observer(({ parent }) => {
     }, [parent]);
 
     useEffect(() => {
-        if (stores.option.padding === 0) {
-            box.fill = '#ffffff00'
+        if (stores.option.padding === 0 && stores.option.frame !== 'macbookpro16') {
+            box.fill = '#ffffff00';
         } else {
             box.fill = stores.option.paddingBg;
         }
@@ -48,7 +51,7 @@ export default observer(({ parent }) => {
 
     useEffect(() => {
         const { shadow } = stores.option;
-        if (shadow === 0) {
+        if (shadow === 0 || stores.option.frame === 'macbookpro16') {
             container.shadow = null;
         } else {
             container.shadow = {
@@ -80,9 +83,14 @@ export default observer(({ parent }) => {
 
     useEffect(() => {
         const { align, frame, frameConf } = stores.option;
+        const { img } = stores.editor;
         const margin = getMargin(frameConf.width, frameConf.height);
-        const { width, height } = computedSize(stores.editor.img.width, stores.editor.img.height, frameConf.width - margin, frameConf.height - margin);
+        const { width, height } = computedSize(img.width, img.height, frameConf.width - margin, frameConf.height - margin);
         let totalHeight = height;
+        let boxX = 0;
+        let boxY = 0;
+        let boxWidth = width;
+        let boxHeight = height;
         switch (frame) {
             case 'light':
                 container.strokeWidth = 8;
@@ -97,6 +105,7 @@ export default observer(({ parent }) => {
             case 'windowsBarLight':
             case 'windowsBarDark':
                 totalHeight += 32;
+                boxY = 32;
                 const barUrl = {
                     mac: { type: 'image', url: macosIcon, format: 'svg', mode: 'clip', offset: { x: 10, y: 0 } },
                     windowsBarLight: { type: 'image', url: windowDark, format: 'svg', mode: 'clip', offset: { x: width - 105, y: 0 } },
@@ -116,6 +125,31 @@ export default observer(({ parent }) => {
                 box.cornerRadius = null;
                 image.cornerRadius = null;
                 break;
+            case 'macbookpro16':
+                const bgSize = computedSize(1920, 1266, width, height);
+                bar.current = new Rect({
+                    x: 0,
+                    y: 0,
+                    height,
+                    width,
+                    fill: [
+                        {
+                            type: 'image', url: macbookpro16, align: 'center', mode: 'clip',
+                            size: {
+                                width: bgSize.width,
+                                height: bgSize.height
+                            }
+                        },
+                    ]
+                });
+                boxWidth = bgSize.width * 4 / 5;
+                boxHeight = 260 * bgSize.height / 330;
+                boxX = (width - boxWidth) / 2;
+                boxY = (35 * bgSize.height / 330) + (height - bgSize.height) / 2;
+                container.shadow = null;
+                box.cornerRadius = null;
+                container.addAfter(bar.current, box);
+                break;
             default:
                 container.strokeWidth = null;
                 container.stroke = null;
@@ -126,22 +160,21 @@ export default observer(({ parent }) => {
         container.origin = align;
         container.x = x;
         container.y = y;
-        box.width = width;
-        box.height = height;
-        box.x = 0;
-        box.y = totalHeight - height;
-        const imageWidth = width - stores.option.padding;
-        const imageheight = Math.round(imageWidth * height / width);
+        box.width = boxWidth;
+        box.height = boxHeight;
+        box.x = boxX;
+        box.y = boxY;
+        const imageWidth = boxWidth - stores.option.padding;
+        const imageheight = Math.round(imageWidth * boxHeight / boxWidth);
         image.width = imageWidth + 2; // 解决有缝隙的问题
         image.height = imageheight + 2;
         image.x = stores.option.padding / 2 - 1;
-        image.y = (height - imageheight) / 2 - 1;
+        image.y = (boxHeight - imageheight) / 2 - 1;
         return (() => {
             container.strokeWidth = null;
             container.stroke = null;
             bar.current?.remove();
             bar.current = null;
-            box.cornerRadius = stores.option.round;
             image.cornerRadius = stores.option.round;
         });
     }, [stores.option.frameConf.width, stores.option.frameConf.height, stores.option.padding, stores.option.align, stores.option.frame]);

@@ -4,11 +4,16 @@ import Icon from '@components/Icon';
 import { Button, Radio, Drawer } from 'antd';
 import stores from '@stores';
 import { windowDark, windowLight } from '@utils/windowsIcon';
+import macbookpro from '@assets/macbookpro.png';
 
 export default observer(() => {
     const [showMore, setShowMore] = useState(false);
     const handelChange = (e) => {
-        stores.option.setFrame(e.target.value)
+        const { value } = e.target;
+        stores.option.setFrame(value);
+        if (value === 'macbookpro16') {
+            stores.option.setPaddingBg('#000000');
+        }
     }
     return (
         <>
@@ -102,11 +107,8 @@ export default observer(() => {
                                     <div className="bg-gray-300/30 rounded-md h-14 overflow-hidden">
                                         <div className="bg-slate-300/40 h-12 w-[85%] rounded-sm shadow-md mt-2 ml-3 overflow-hidden">
                                             <div className="bg-white/90 px-0.5">
-                                                <div className="h-2.5" style={{
+                                                <div className="h-2.5 bg-no-repeat bg-[right_center] bg-[auto_100%]" style={{
                                                 backgroundImage: `url(${ windowDark })`,
-                                                backgroundRepeat: 'no-repeat',
-                                                backgroundPosition: 'right center',
-                                                backgroundSize: 'auto 100%'
                                             }} />
                                             </div>
                                         </div>
@@ -116,15 +118,26 @@ export default observer(() => {
                                     <div className="bg-gray-300/30 rounded-md h-14 overflow-hidden">
                                         <div className="bg-slate-300/40 h-12 w-[85%] rounded-sm shadow-md mt-2 ml-3 overflow-hidden">
                                             <div className="bg-black/90 px-0.5">
-                                                <div className="h-2.5" style={{
+                                                <div className="h-2.5 bg-no-repeat bg-[right_center] bg-[auto_100%]" style={{
                                                     backgroundImage: `url(${ windowLight })`,
-                                                    backgroundRepeat: 'no-repeat',
-                                                    backgroundPosition: 'right center',
-                                                    backgroundSize: 'auto 100%'
                                                 }} />
                                             </div>
                                         </div>
                                     </div>
+                                </Radio>
+                            </Radio.Group>
+                        </div>
+                        <h4 className="text-sm font-bold py-2">Devices</h4>
+                        <div className="py-3 [&_.ant-radio-wrapper_span]:p-0 [&_.ant-radio-wrapper_span]:px-1">
+                            <Radio.Group
+                                rootClassName="grid grid-cols-3"
+                                onChange={handelChange}
+                                value={stores.option.frame}
+                            >
+                                <Radio className="[&_.ant-radio]:hidden [&_span]:mr-0 [&_span]:block [&_span]:w-full" value='macbookpro16'>
+                                    <div className="bg-gray-300/30 rounded-md h-14 overflow-hidden bg-no-repeat bg-center bg-[auto_120%]" style={{
+                                        backgroundImage: `url(${ macbookpro })`,
+                                    }} />
                                 </Radio>
                             </Radio.Group>
                         </div>

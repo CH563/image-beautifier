@@ -59,7 +59,7 @@ export default observer(() => {
                     <label>Scale</label>
                     <Slider
                         min={0.1}
-                        max={2}
+                        max={3}
                         step={0.1}
                         onChange={(e) => stores.option.setScale(e)}
                         value={typeof stores.option.scale === 'number' ? stores.option.scale : 1}
