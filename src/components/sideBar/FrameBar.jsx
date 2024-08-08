@@ -6,6 +6,9 @@ import stores from '@stores';
 import { windowDark, windowLight } from '@utils/windowsIcon';
 import macbookpro from '@assets/macbookpro.png';
 import macbookair from '@assets/macbook-air-little.png';
+import imacpro from '@assets/imac.png';
+import ipadpro from '@assets/ipad.png';
+import iphonepro from '@assets/iphone.png';
 
 export default observer(() => {
     const [showMore, setShowMore] = useState(false);
@@ -143,6 +146,21 @@ export default observer(() => {
                                 <Radio className="[&_.ant-radio]:hidden [&_span]:mr-0 [&_span]:block [&_span]:w-full" value='macbookair'>
                                     <div className="bg-gray-300/30 rounded-md h-14 overflow-hidden bg-no-repeat bg-[13px_-6px] bg-[92px_auto]" style={{
                                         backgroundImage: `url(${ macbookair })`,
+                                    }} />
+                                </Radio>
+                                <Radio className="[&_.ant-radio]:hidden [&_span]:mr-0 [&_span]:block [&_span]:w-full" value='imacpro'>
+                                    <div className="bg-gray-300/30 rounded-md h-14 overflow-hidden bg-no-repeat bg-[13px_top] bg-[90px_auto]" style={{
+                                        backgroundImage: `url(${ imacpro })`,
+                                    }} />
+                                </Radio>
+                                <Radio className="[&_.ant-radio]:hidden [&_span]:mr-0 [&_span]:block [&_span]:w-full" value='ipadpro'>
+                                    <div className="bg-gray-300/30 rounded-md h-14 overflow-hidden bg-no-repeat bg-[center_top] bg-[100px_auto]" style={{
+                                        backgroundImage: `url(${ ipadpro })`,
+                                    }} />
+                                </Radio>
+                                <Radio className="[&_.ant-radio]:hidden [&_span]:mr-0 [&_span]:block [&_span]:w-full" value='iphonepro'>
+                                    <div className="bg-gray-300/30 rounded-md h-14 overflow-hidden bg-no-repeat bg-[center_top] bg-[100px_auto]" style={{
+                                        backgroundImage: `url(${ iphonepro })`,
                                     }} />
                                 </Radio>
                             </Radio.Group>

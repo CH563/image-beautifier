@@ -7,6 +7,9 @@ import macosIcon from '@utils/macosIcon';
 import { windowDark, windowLight } from '@utils/windowsIcon';
 import macbookpro16 from '@assets/macbook-pro-16.png';
 import macbookair from '@assets/macbook-air.png';
+import imacpro from '@assets/imac-pro.png';
+import ipadpro from '@assets/ipadpro.png';
+import iphonepro from '@assets/iphonepro.png';
 
 const info = {
     macbookpro16: {
@@ -24,6 +27,30 @@ const info = {
         horizontal: 396 / 500,
         vertical: 258 / 299,
         top: 9 / 299
+    },
+    imacpro: {
+        image: imacpro,
+        width: 1920,
+        height: 1599,
+        horizontal: 111 / 125,
+        vertical: 252 / 417,
+        top: 29 / 417
+    },
+    ipadpro: {
+        image: ipadpro,
+        width: 1920,
+        height: 1425,
+        horizontal: 430 / 500,
+        vertical: 300 / 372,
+        top: 36 / 372
+    },
+    iphonepro: {
+        image: iphonepro,
+        width: 968,
+        height: 1920,
+        horizontal: 214 / 253,
+        vertical: 462 / 500,
+        top: 19 / 500
     }
 };
 
@@ -54,7 +81,7 @@ export default observer(({ parent }) => {
     }, [parent]);
 
     useEffect(() => {
-        if (stores.option.padding === 0 && stores.option.frame !== 'macbookpro16') {
+        if (stores.option.padding === 0 && !info[stores.option.frame]) {
             box.fill = '#ffffff00';
         } else {
             box.fill = stores.option.paddingBg;
@@ -64,7 +91,7 @@ export default observer(({ parent }) => {
     useEffect(() => {
         const { round } = stores.option;
         container.cornerRadius = round;
-        if (!bar.current) {
+        if (!bar.current || info[stores.option.frame]) {
             image.cornerRadius = round;
         }
     }, [stores.option.round]);
@@ -147,6 +174,9 @@ export default observer(({ parent }) => {
                 break;
             case 'macbookpro16':
             case 'macbookair':
+            case 'imacpro':
+            case 'ipadpro':
+            case 'iphonepro':
                 const device = info[frame];
                 const bgSize = computedSize(device.width, device.height, width, height);
                 bar.current = new Rect({
@@ -169,7 +199,7 @@ export default observer(({ parent }) => {
                 boxX = (width - boxWidth) / 2;
                 boxY = (bgSize.height * device.top) + (height - bgSize.height) / 2;
                 container.shadow = null;
-                box.cornerRadius = null;
+                box.cornerRadius = frame === 'iphonepro' ? bgSize.width * 1/10 : null;
                 container.addAfter(bar.current, box);
                 break;
             default:
