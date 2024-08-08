@@ -129,7 +129,7 @@ export default observer(({ parent }) => {
 
 
     useEffect(() => {
-        const { align, frame, frameConf } = stores.option;
+        const { align, frame, frameConf, shadow, round, padding } = stores.option;
         const { img } = stores.editor;
         const margin = getMargin(frameConf.width, frameConf.height);
         const { width, height } = computedSize(img.width, img.height, frameConf.width - margin, frameConf.height - margin);
@@ -216,18 +216,27 @@ export default observer(({ parent }) => {
         box.height = boxHeight;
         box.x = boxX;
         box.y = boxY;
-        const imageWidth = boxWidth - stores.option.padding;
+        const imageWidth = boxWidth - padding;
         const imageheight = Math.round(imageWidth * boxHeight / boxWidth);
         image.width = imageWidth + 2; // 解决有缝隙的问题
         image.height = imageheight + 2;
-        image.x = stores.option.padding / 2 - 1;
+        image.x = padding / 2 - 1;
         image.y = (boxHeight - imageheight) / 2 - 1;
         return (() => {
             container.strokeWidth = null;
             container.stroke = null;
             bar.current?.remove();
             bar.current = null;
-            image.cornerRadius = stores.option.round;
+            box.cornerRadius = null;
+            image.cornerRadius = round;
+            container.cornerRadius = round;
+            container.shadow = {
+                x: shadow * 4,
+                y: shadow * 4,
+                blur: shadow * 3,
+                color: '#00000045',
+                box: true
+            };
         });
     }, [stores.option.frameConf.width, stores.option.frameConf.height, stores.option.padding, stores.option.align, stores.option.frame]);
 
