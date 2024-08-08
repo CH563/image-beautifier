@@ -6,6 +6,26 @@ import { computedSize, getPosition, getMargin } from '@utils/utils';
 import macosIcon from '@utils/macosIcon';
 import { windowDark, windowLight } from '@utils/windowsIcon';
 import macbookpro16 from '@assets/macbook-pro-16.png';
+import macbookair from '@assets/macbook-air.png';
+
+const info = {
+    macbookpro16: {
+        image: macbookpro16,
+        width: 1920,
+        height: 1266,
+        horizontal: 4 / 5,
+        vertical: 26 / 33,
+        top: 7 / 66
+    },
+    macbookair: {
+        image: macbookair,
+        width: 1920,
+        height: 1147,
+        horizontal: 396 / 500,
+        vertical: 258 / 299,
+        top: 9 / 299
+    }
+};
 
 export default observer(({ parent }) => {
     const bar = useRef(null);
@@ -126,7 +146,9 @@ export default observer(({ parent }) => {
                 image.cornerRadius = null;
                 break;
             case 'macbookpro16':
-                const bgSize = computedSize(1920, 1266, width, height);
+            case 'macbookair':
+                const device = info[frame];
+                const bgSize = computedSize(device.width, device.height, width, height);
                 bar.current = new Rect({
                     x: 0,
                     y: 0,
@@ -134,7 +156,7 @@ export default observer(({ parent }) => {
                     width,
                     fill: [
                         {
-                            type: 'image', url: macbookpro16, align: 'center', mode: 'clip',
+                            type: 'image', url: device.image, align: 'center', mode: 'clip',
                             size: {
                                 width: bgSize.width,
                                 height: bgSize.height
@@ -142,10 +164,10 @@ export default observer(({ parent }) => {
                         },
                     ]
                 });
-                boxWidth = bgSize.width * 4 / 5;
-                boxHeight = 260 * bgSize.height / 330;
+                boxWidth = bgSize.width * device.horizontal;
+                boxHeight = bgSize.height * device.vertical;
                 boxX = (width - boxWidth) / 2;
-                boxY = (35 * bgSize.height / 330) + (height - bgSize.height) / 2;
+                boxY = (bgSize.height * device.top) + (height - bgSize.height) / 2;
                 container.shadow = null;
                 box.cornerRadius = null;
                 container.addAfter(bar.current, box);

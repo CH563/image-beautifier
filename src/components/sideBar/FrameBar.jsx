@@ -5,6 +5,7 @@ import { Button, Radio, Drawer } from 'antd';
 import stores from '@stores';
 import { windowDark, windowLight } from '@utils/windowsIcon';
 import macbookpro from '@assets/macbookpro.png';
+import macbookair from '@assets/macbook-air-little.png';
 
 export default observer(() => {
     const [showMore, setShowMore] = useState(false);
@@ -135,8 +136,13 @@ export default observer(() => {
                                 value={stores.option.frame}
                             >
                                 <Radio className="[&_.ant-radio]:hidden [&_span]:mr-0 [&_span]:block [&_span]:w-full" value='macbookpro16'>
-                                    <div className="bg-gray-300/30 rounded-md h-14 overflow-hidden bg-no-repeat bg-center bg-[auto_120%]" style={{
+                                    <div className="bg-gray-300/30 rounded-md h-14 overflow-hidden bg-no-repeat bg-[10px_-5px] bg-[100px_auto]" style={{
                                         backgroundImage: `url(${ macbookpro })`,
+                                    }} />
+                                </Radio>
+                                <Radio className="[&_.ant-radio]:hidden [&_span]:mr-0 [&_span]:block [&_span]:w-full" value='macbookair'>
+                                    <div className="bg-gray-300/30 rounded-md h-14 overflow-hidden bg-no-repeat bg-[13px_-6px] bg-[92px_auto]" style={{
+                                        backgroundImage: `url(${ macbookair })`,
                                     }} />
                                 </Radio>
                             </Radio.Group>

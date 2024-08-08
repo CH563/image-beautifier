@@ -139,7 +139,7 @@ export default observer(({headLeft, headRight}) => {
                     <Button
                         type="text"
                         shape='circle'
-                        icon={stores.editor.isDark ? <Icon.Sun size={16} /> : <Icon.Moon size={16} />}
+                        icon={stores.editor.isDark ? <Icon.Moon size={16} /> : <Icon.Sun size={16} />}
                         onClick={handleSetTheme}
                     ></Button>
                 </MediaLogo>
