@@ -131,7 +131,18 @@ export default observer(() => {
                                 </Radio>
                             </Radio.Group>
                         </div>
-                        <h4 className="text-sm font-bold py-2">Devices</h4>
+                        <div className="flex justify-between items-center py-2">
+                            <h4 className="text-sm font-bold">Devices</h4>
+                            <Radio.Group
+                                value={stores.option.frameMode}
+                                onChange={(e) => stores.option.setFrameMode(e.target.value)}
+                                size="small"
+                            >
+                                <Radio.Button value="cover">Cover</Radio.Button>
+                                <Radio.Button value="fit">Contain</Radio.Button>
+                                <Radio.Button value="strench">Stretch</Radio.Button>
+                            </Radio.Group>
+                        </div>
                         <div className="py-3 [&_.ant-radio-wrapper_span]:p-0 [&_.ant-radio-wrapper_span]:px-1">
                             <Radio.Group
                                 rootClassName="grid grid-cols-3"

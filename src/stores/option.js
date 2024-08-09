@@ -10,6 +10,7 @@ class Option {
     round = 10;
     shadow = 3;
     frame = 'none';
+    frameMode = 'cover';
     background = 'default_1';
     align = 'center';
     waterImg = null;
@@ -36,6 +37,10 @@ class Option {
         return toJS(this.waterImg);
     }
 
+    get mode() {
+        return this.frame === 'none' || this.frame.includes('Bar') ? 'cover' : this.frameMode;
+    }
+
     setScale(value) {
         this.scale = value;
     }
@@ -58,6 +63,10 @@ class Option {
 
     setFrame(value) {
         this.frame = value;
+    }
+
+    setFrameMode(value) {
+        this.frameMode = value;
     }
 
     setFrameSize(width, height) {

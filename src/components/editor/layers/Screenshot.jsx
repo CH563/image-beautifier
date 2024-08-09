@@ -32,7 +32,7 @@ const info = {
         image: imacpro,
         width: 1920,
         height: 1599,
-        horizontal: 111 / 125,
+        horizontal: 112 / 125,
         vertical: 252 / 417,
         top: 29 / 417
     },
@@ -41,8 +41,8 @@ const info = {
         width: 1920,
         height: 1425,
         horizontal: 430 / 500,
-        vertical: 300 / 372,
-        top: 36 / 372
+        vertical: 302 / 372,
+        top: 35 / 372
     },
     iphonepro: {
         image: iphonepro,
@@ -58,13 +58,7 @@ export default observer(({ parent }) => {
     const bar = useRef(null);
     const [image, box, container] = useMemo(() => {
         const image = new Rect({
-            origin: 'center',
-            fill: {
-                type: 'image',
-                url: stores.editor.img.src,
-                align: 'top',
-                mode: 'cover'
-            }
+            origin: 'center'
         });
         const box = new Box({
             overflow: 'hide',
@@ -79,6 +73,15 @@ export default observer(({ parent }) => {
         });
         return [image, box, container];
     }, [parent]);
+
+    useEffect(() => {
+        image.fill = {
+            type: 'image',
+            url: stores.editor.img.src,
+            align: stores.option.mode === 'fit' ? 'center' : 'top',
+            mode: stores.option.mode
+        };
+    }, [stores.option.mode]);
 
     useEffect(() => {
         if (stores.option.padding === 0 && !info[stores.option.frame]) {

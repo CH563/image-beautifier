@@ -29,12 +29,12 @@ function App() {
 - 方框，圆圈，箭头，Emoji表情等各种尺寸的批注
 - 添加水印
 - 画布任意缩放和拖拉
+- 设备套壳（macbook/iphone等）
 
 
 TODO:
 
 - Redo / Undo 步骤记录
-- 设备套壳（macbook/iphone等）
 - 接入Unsplash背景图
 - 文字卡片
 - 代码美化卡片
