@@ -27,6 +27,7 @@ export default ({ parent, type, id, width, height, x, y, fill, strokeWidth, zInd
         }
         if (type === 'Magnifier') {
             return new Ellipse({
+                name: 'Magnifier',
                 stroke: '#ffffff90',
                 strokeWidth,
                 strokeAlign: 'outside',
@@ -168,7 +169,7 @@ export default ({ parent, type, id, width, height, x, y, fill, strokeWidth, zInd
                     ]
                 }
             ];
-        }, 10);
+        }, 5);
         shape.on(PropertyEvent.CHANGE, (arg) => {
             if (!snap?.data) return;
             if (!['x', 'y', 'width', 'height'].includes(arg.attrName)) return;

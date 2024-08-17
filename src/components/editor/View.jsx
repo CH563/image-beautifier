@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
 import { App, ResizeEvent, ZoomEvent, DragEvent, PointerEvent, Cursor } from 'leafer-ui';
+import { EditorMoveEvent } from '@leafer-in/editor';
 import debounce from 'lodash/debounce';
 import { addListener, removeListener } from 'resize-detector';
 import rotatePng from '@assets/rotate.png';
@@ -13,7 +14,7 @@ import ShapeLine from './layers/ShapeLine';
 import { ScrollBar } from '@leafer-in/scroll'
 import { nanoid } from '@utils/utils';
 import HotKeys from './HotKeys';
-import '@leafer-in/editor';
+// import '@leafer-in/editor';
 import '@leafer-in/view';
 
 Cursor.set('pencil', { url: pencilPng });
@@ -56,6 +57,16 @@ export default observer(({target}) => {
             stores.editor.setScale(app.tree.scale);
         });
 
+        app.editor.on(EditorMoveEvent.SELECT, (event) => {
+            const { list } = event;
+            if (list.some(e => e.name === 'Magnifier')) {
+                app.editor.config.rotateable = false;
+                app.editor.config.lockRatio = true;
+            } else {
+                app.editor.config.rotateable = true;
+                app.editor.config.lockRatio = false;
+            }
+        })
         
         let shapeId = null;
         const onStart = (arg) => {
@@ -103,6 +114,11 @@ export default observer(({target}) => {
             const shape = stores.editor.getShape(shapeId);
             if (!shape) return;
             const size = arg.getPageBounds();
+            const max = Math.max(size.width, size.height);
+            if (shape.type === 'Magnifier') {
+                size.width = max;
+                size.height = max;
+            }
             const newShape = Object.assign({}, shape, size);
             const { points, type } = newShape;
             if (points && points.length) {
