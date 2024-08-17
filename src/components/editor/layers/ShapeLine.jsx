@@ -1,9 +1,10 @@
 import { useEffect, useMemo } from 'react';
-import { Rect, Ellipse, Line, Text } from 'leafer-ui';
+import { Rect, Ellipse, Line, Text, PropertyEvent } from 'leafer-ui';
 import { Arrow } from '@leafer-in/arrow';
+import debounce from 'lodash/debounce';
 import { numSvg } from '@utils/utils';
 
-export default ({ parent, type, id, width, height, x, y, fill, strokeWidth, zIndex, points, editable, text }) => {
+export default ({ parent, type, id, width, height, x, y, fill, strokeWidth, zIndex, points, editable, text, snap }) => {
     const shape = useMemo(() => {
         const defaultOption = { id, x, y, zIndex }
         if (type === 'SquareFill') {
@@ -21,6 +22,23 @@ export default ({ parent, type, id, width, height, x, y, fill, strokeWidth, zInd
                 strokeWidth,
                 width,
                 height,
+                ...defaultOption
+            });
+        }
+        if (type === 'Magnifier') {
+            return new Ellipse({
+                stroke: '#ffffff90',
+                strokeWidth,
+                strokeAlign: 'outside',
+                width,
+                height,
+                shadow: {
+                    x: 4,
+                    y: 4,
+                    blur: 6,
+                    color: '#00000010',
+                    box: true
+                },
                 ...defaultOption
             });
         }
@@ -60,7 +78,7 @@ export default ({ parent, type, id, width, height, x, y, fill, strokeWidth, zInd
                 width: 32,
                 height: 32,
                 stroke: '#ffffff90',
-                strokeWidth: 2,
+                strokeWidth,
                 strokeAlign: 'outside',
                 lockRatio: true,
                 shadow: {
@@ -121,8 +139,44 @@ export default ({ parent, type, id, width, height, x, y, fill, strokeWidth, zInd
     }, [editable]);
 
     useEffect(() => {
+        const offset = {x:0,y:0};
+        const fillBg = debounce(() => {
+            const x = -shape.x * 2 - shape.width / 2;
+            const y = -shape.y * 2 - shape.height / 2;
+            if (offset.x === x && offset.y === y) return;
+            offset.x = x;
+            offset.y = y;
+            shape.fill = [
+                { type: 'solid', color: '#ffffff' },
+                {
+                    type: 'image',
+                    url: snap.data,
+                    mode: 'clip',
+                    size: {
+                        width: snap.width,
+                        height: snap.height
+                    },
+                    offset
+                },
+                {
+                    type: 'linear',
+                    from: 'top',
+                    to: 'bottom',
+                    stops: [
+                        { offset: 0, color: '#ffffffaa' },
+                        { offset: 0.48, color: '#ffffff00'}
+                    ]
+                }
+            ];
+        }, 10);
+        shape.on(PropertyEvent.CHANGE, (arg) => {
+            if (!snap?.data) return;
+            if (!['x', 'y', 'width', 'height'].includes(arg.attrName)) return;
+            fillBg();
+        });
         parent.add(shape);
         return (() => {
+            shape.off(PropertyEvent.CHANGE);
             shape.remove();
         })
     }, [parent]);

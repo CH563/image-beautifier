@@ -65,6 +65,7 @@ export default observer(({ parent }) => {
             children: [image]
         });
         const container = new Box({
+            id: 'screenshot-box',
             overflow: 'hide',
             strokeAlign: 'outside',
             scale: 1,
@@ -81,6 +82,7 @@ export default observer(({ parent }) => {
             align: stores.option.mode === 'fit' ? 'center' : 'top',
             mode: stores.option.mode
         };
+        stores.editor.createSnap('update');
     }, [stores.option.mode]);
 
     useEffect(() => {
@@ -89,6 +91,7 @@ export default observer(({ parent }) => {
         } else {
             box.fill = stores.option.paddingBg;
         }
+        stores.editor.createSnap('update');
     }, [stores.option.paddingBg, stores.option.padding]);
 
     useEffect(() => {
@@ -97,6 +100,7 @@ export default observer(({ parent }) => {
         if (!bar.current || info[stores.option.frame]) {
             image.cornerRadius = round;
         }
+        stores.editor.createSnap('update');
     }, [stores.option.round]);
 
     useEffect(() => {
@@ -112,22 +116,27 @@ export default observer(({ parent }) => {
                 box: true
             };
         }
+        stores.editor.createSnap('update');
     }, [stores.option.shadow]);
 
     useEffect(() => {
         container.scale = stores.option.scale;
+        stores.editor.createSnap('update');
     }, [stores.option.scale]);
 
     useEffect(() => {
         image.url = stores.editor.img.src;
+        stores.editor.createSnap('update');
     }, [stores.editor.img.src]);
 
     useEffect(() => {
         image.scaleX = stores.option.scaleX ? -1 : 1;
+        stores.editor.createSnap('update');
     }, [stores.option.scaleX]);
 
     useEffect(() => {
         image.scaleY = stores.option.scaleY ? -1 : 1;
+        stores.editor.createSnap('update');
     }, [stores.option.scaleY]);
 
 
@@ -225,6 +234,7 @@ export default observer(({ parent }) => {
         image.height = imageheight + 2;
         image.x = padding / 2 - 1;
         image.y = (boxHeight - imageheight) / 2 - 1;
+        stores.editor.createSnap('update');
         return (() => {
             container.strokeWidth = null;
             container.stroke = null;

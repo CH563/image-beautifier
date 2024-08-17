@@ -11,18 +11,19 @@ import EmojiSelect from './EmojiSelect';
 import Logo from './Logo';
 import MediaLogo from './MediaLogo';
 
-const toolList = ['Square', 'SquareFill', 'Circle', 'Slash', 'MoveDownLeft', 'Pencil', 'Step', 'Smile'];
+const toolList = ['Square', 'SquareFill', 'Circle', 'Slash', 'MoveDownLeft', 'Pencil', 'Magnifier', 'Step', 'Smile'];
 
 export default observer(({headLeft, headRight}) => {
     const [isMove, setIsMove] = useState(false);
     // const handleUndo = () => {
-    //     console.log(JSON.stringify(stores.editor.app.toJSON()))
+    //     stores.editor.createSnap();
     // };
     const selectTool = (type) => {
         if (!stores.editor.isEditing) return;
         const { useTool } = stores.editor;
         stores.editor.setUseTool(useTool === type ? null : type);
         setIsMove(false);
+        if (type === 'Magnifier') stores.editor.createSnap('init');
     }
     const handleSelectEmoji = (emoji) => {
         if (!stores.editor.isEditing) return;
@@ -83,6 +84,8 @@ export default observer(({headLeft, headRight}) => {
                         const type = item.replace('Fill', '');
                         const Icons = icons[type];
                         icon = <Icons size={16} fill='currentColor' />;
+                    } else if (item === 'Magnifier') {
+                        icon = <Icon.MessageCirclePlus size={16} />;
                     } else if (item === 'Step') {
                         icon = <div key={item} className="border text-xs border-black dark:border-white w-4 h-4 rounded-full text-center leading-4">{stores.editor.nextStep}</div>;
                     } else {

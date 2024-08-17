@@ -131,7 +131,6 @@ export default observer(({target}) => {
             shapeId = null;
             if (stores.editor.useTool !== 'Pencil') stores.editor.setUseTool(null);
         });
-
         // 监听容器变化
         const onResize = debounce(() => {
             const { width, height } = target.getBoundingClientRect();
@@ -166,11 +165,13 @@ export default observer(({target}) => {
     if (!stores.editor.app?.tree) return null;
     return (<>
         <FrameBox parent={stores.editor.app.tree} cursor={stores.editor.cursor} {...stores.option.frameConf}>
-                {stores.editor.shapesList.map((item) => (
-                    <ShapeLine key={item.id} {...item} />
-                ))}
-                {stores.editor.img?.src && <Screenshot />}
-                {stores.option.waterImg && <Watermark />}
+            {stores.editor.shapesList.map((item) => {
+                const { id, type } = item;
+                const props = Object.assign({}, item, type === 'Magnifier' ? {snap: stores.editor.snap} : {});
+                return <ShapeLine key={id} {...props} />;
+            })}
+            {stores.editor.img?.src && <Screenshot />}
+            {stores.option.waterImg && <Watermark />}
         </FrameBox>
         <HotKeys />
     </>);

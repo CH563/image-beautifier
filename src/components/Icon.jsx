@@ -38,7 +38,8 @@ import {
     Pipette,
     Trash2,
     Sun,
-    Moon
+    Moon,
+    MessageCirclePlus
 } from 'lucide-react';
 
 export default {
@@ -81,5 +82,6 @@ export default {
     Pipette,
     Trash2,
     Sun,
-    Moon
+    Moon,
+    MessageCirclePlus
 };

@@ -1,5 +1,5 @@
 import { makeAutoObservable, toJS, action, runInAction } from 'mobx';
-import { maxBy } from 'lodash';
+import { maxBy, debounce } from 'lodash';
 
 let timer;
 class Editor {
@@ -14,6 +14,7 @@ class Editor {
     message = null;
     theme = 'light';
     clearFun = null;
+    snap = null;
     constructor () {
         makeAutoObservable(this)
     }
@@ -44,6 +45,26 @@ class Editor {
 
     get isDark() {
         return this.theme === 'dark';
+    }
+
+    createSnap(type) {
+        if (type === 'init' && this.snap?.data) return;
+        if (type !== 'init' && this.snap === null) return;
+        const create = debounce(async() => {
+            const frame = this.app?.tree?.children[0];
+            if (!frame) return;
+            frame.children.map(child => {
+                if (child.id !== 'screenshot-box') {
+                    child.visible = false;
+                }
+            });
+            const image = await frame.export('png', { pixelRatio: 2 }).catch(() => null);
+            frame.children.map(child => child.visible = true);
+            runInAction(() => {
+                this.snap = image;
+            });
+        }, type === 'init' ? 10 : 500);
+        create();
     }
 
     setTheme(value) {
@@ -83,6 +104,9 @@ class Editor {
 
     removeShape(shape) {
         this.shapes.delete(shape.id);
+        if (this.snap && this.shapesList.every(e => e.type !== 'Magnifier')) {
+            this.snap = null;
+        }
     }
 
     setApp(app) {
@@ -128,6 +152,7 @@ class Editor {
     destroy() {
         this.app?.destroy(true);
         this.app = null;
+        this.snap = null;
         this.shapes.clear();
         this.setUseTool(null);
     }
