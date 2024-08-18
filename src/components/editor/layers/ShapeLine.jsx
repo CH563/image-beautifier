@@ -3,6 +3,7 @@ import { Rect, Ellipse, Line, Text, PropertyEvent } from 'leafer-ui';
 import { Arrow } from '@leafer-in/arrow';
 import debounce from 'lodash/debounce';
 import { numSvg } from '@utils/utils';
+import Magnifier from '@utils/shape/Magnifier';
 
 export default ({ parent, type, id, width, height, x, y, fill, strokeWidth, zIndex, points, editable, text, snap }) => {
     const shape = useMemo(() => {
@@ -26,8 +27,7 @@ export default ({ parent, type, id, width, height, x, y, fill, strokeWidth, zInd
             });
         }
         if (type === 'Magnifier') {
-            return new Ellipse({
-                name: 'Magnifier',
+            return new Magnifier({
                 stroke: '#ffffff90',
                 strokeWidth,
                 strokeAlign: 'outside',
@@ -136,10 +136,29 @@ export default ({ parent, type, id, width, height, x, y, fill, strokeWidth, zInd
     }, [x, y, width, height]);
 
     useEffect(() => {
+        if (type === 'SquareFill') shape.fill = fill;
+        if (['Circle', 'Slash', 'MoveDownLeft', 'Pencil', 'Square'].includes(type)) shape.stroke = fill;
+        if (type === 'Step') {
+            const oldFill = [].concat(shape.fill);
+            oldFill[0].color = fill;
+            shape.fill = oldFill;
+        }
+    }, [fill]);
+
+    useEffect(() => {
+        if (['Circle', 'Magnifier', 'Slash', 'MoveDownLeft', 'Pencil', 'Step', 'Square'].includes(type)) shape.strokeWidth = strokeWidth;
+    }, [strokeWidth]);
+
+    useEffect(() => {
         shape.editable = !!editable;
     }, [editable]);
 
     useEffect(() => {
+        if (type === 'Magnifier' && shape.fill && snap) {
+            const oldFill = [].concat(shape.fill);
+            oldFill[1] = Object.assign({}, oldFill[1], { url: snap.data, size: { width: snap.width, height: snap.height } });
+            shape.fill = oldFill;
+        }
         const offset = {x:0,y:0};
         const fillBg = debounce(() => {
             const x = -shape.x * 2 - shape.width / 2;
@@ -175,9 +194,14 @@ export default ({ parent, type, id, width, height, x, y, fill, strokeWidth, zInd
             if (!['x', 'y', 'width', 'height'].includes(arg.attrName)) return;
             fillBg();
         });
-        parent.add(shape);
         return (() => {
             shape.off(PropertyEvent.CHANGE);
+        })
+    }, [snap]);
+
+    useEffect(() => {
+        parent.add(shape);
+        return (() => {
             shape.remove();
         })
     }, [parent]);

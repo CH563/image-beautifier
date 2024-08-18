@@ -14,7 +14,6 @@ import ShapeLine from './layers/ShapeLine';
 import { ScrollBar } from '@leafer-in/scroll'
 import { nanoid } from '@utils/utils';
 import HotKeys from './HotKeys';
-// import '@leafer-in/editor';
 import '@leafer-in/view';
 
 Cursor.set('pencil', { url: pencilPng });
@@ -59,14 +58,15 @@ export default observer(({target}) => {
 
         app.editor.on(EditorMoveEvent.SELECT, (event) => {
             const { list } = event;
-            if (list.some(e => e.name === 'Magnifier')) {
+            if (list.length < 2) return;
+            if (list.some(e => e.tag === 'Magnifier')) {
                 app.editor.config.rotateable = false;
                 app.editor.config.lockRatio = true;
             } else {
                 app.editor.config.rotateable = true;
                 app.editor.config.lockRatio = false;
             }
-        })
+        });
         
         let shapeId = null;
         const onStart = (arg) => {
@@ -154,7 +154,7 @@ export default observer(({target}) => {
             if (stores.option.frameConf.width < width && stores.option.frameConf.height < height) {
                 app.tree.zoom(1);
             }
-        }, 10);
+        }, 50);
 
         addListener(target, onResize);
 

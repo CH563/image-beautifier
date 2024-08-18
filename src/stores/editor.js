@@ -1,5 +1,5 @@
 import { makeAutoObservable, toJS, action, runInAction } from 'mobx';
-import { maxBy, debounce } from 'lodash';
+import { maxBy } from 'lodash';
 
 let timer;
 class Editor {
@@ -50,7 +50,7 @@ class Editor {
     createSnap(type) {
         if (type === 'init' && this.snap?.data) return;
         if (type !== 'init' && this.snap === null) return;
-        const create = debounce(async() => {
+        const ex = async () => {
             const frame = this.app?.tree?.children[0];
             if (!frame) return;
             frame.children.map(child => {
@@ -63,8 +63,8 @@ class Editor {
             runInAction(() => {
                 this.snap = image;
             });
-        }, type === 'init' ? 10 : 500);
-        create();
+        };
+        ex();
     }
 
     setTheme(value) {
@@ -135,10 +135,24 @@ class Editor {
 
     setAnnotateColor(color) {
         this.annotateColor = color;
+        if (!this.app?.editor) return;
+        const { list } = this.app.editor;
+        if (!list.length) return;
+        for (let item of list) {
+            const shape = this.shapes.get(item.id);
+            if (shape) shape.fill = color;
+        }
     }
 
     setStrokeWidth(value) {
         this.strokeWidth = value;
+        if (!this.app?.editor) return;
+        const { list } = this.app.editor;
+        if (!list.length) return;
+        for (let item of list) {
+            const shape = this.shapes.get(item.id);
+            if (shape) shape.strokeWidth = value;
+        }
     }
 
     setClearFun(value) {

@@ -10,6 +10,7 @@ import macbookair from '@assets/macbook-air.png';
 import imacpro from '@assets/imac-pro.png';
 import ipadpro from '@assets/ipadpro.png';
 import iphonepro from '@assets/iphonepro.png';
+import { debounce } from 'lodash';
 
 const info = {
     macbookpro16: {
@@ -54,6 +55,10 @@ const info = {
     }
 };
 
+const createSnap = debounce(() => {
+    stores.editor.createSnap('update');
+}, 100);
+
 export default observer(({ parent }) => {
     const bar = useRef(null);
     const [image, box, container] = useMemo(() => {
@@ -82,7 +87,7 @@ export default observer(({ parent }) => {
             align: stores.option.mode === 'fit' ? 'center' : 'top',
             mode: stores.option.mode
         };
-        stores.editor.createSnap('update');
+        createSnap();
     }, [stores.option.mode]);
 
     useEffect(() => {
@@ -91,7 +96,7 @@ export default observer(({ parent }) => {
         } else {
             box.fill = stores.option.paddingBg;
         }
-        stores.editor.createSnap('update');
+        createSnap();
     }, [stores.option.paddingBg, stores.option.padding]);
 
     useEffect(() => {
@@ -100,7 +105,7 @@ export default observer(({ parent }) => {
         if (!bar.current || info[stores.option.frame]) {
             image.cornerRadius = round;
         }
-        stores.editor.createSnap('update');
+        createSnap();
     }, [stores.option.round]);
 
     useEffect(() => {
@@ -116,27 +121,26 @@ export default observer(({ parent }) => {
                 box: true
             };
         }
-        stores.editor.createSnap('update');
+        createSnap();
     }, [stores.option.shadow]);
 
     useEffect(() => {
         container.scale = stores.option.scale;
-        stores.editor.createSnap('update');
+        createSnap();
     }, [stores.option.scale]);
 
     useEffect(() => {
         image.url = stores.editor.img.src;
-        stores.editor.createSnap('update');
     }, [stores.editor.img.src]);
 
     useEffect(() => {
         image.scaleX = stores.option.scaleX ? -1 : 1;
-        stores.editor.createSnap('update');
+        createSnap();
     }, [stores.option.scaleX]);
 
     useEffect(() => {
         image.scaleY = stores.option.scaleY ? -1 : 1;
-        stores.editor.createSnap('update');
+        createSnap();
     }, [stores.option.scaleY]);
 
 
@@ -234,7 +238,7 @@ export default observer(({ parent }) => {
         image.height = imageheight + 2;
         image.x = padding / 2 - 1;
         image.y = (boxHeight - imageheight) / 2 - 1;
-        stores.editor.createSnap('update');
+        createSnap();
         return (() => {
             container.strokeWidth = null;
             container.stroke = null;
